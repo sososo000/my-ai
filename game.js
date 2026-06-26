@@ -290,91 +290,169 @@ class Game{
 
   draw(){
     const c=this.c;
-    // 배경 (LOBBY에서도 그림)
-    const g=c.createLinearGradient(0,0,0,DH);
-    g.addColorStop(0,'#87CEEB');g.addColorStop(.5,'#C8E6C9');g.addColorStop(1,'#66BB6A');
-    c.fillStyle=g;c.fillRect(0,0,DW,DH);
-    
-    // 구름
-    c.fillStyle='rgba(255,255,255,.6)';
-    for(let i=0;i<5;i++){const x=(i*150+this.time*20)%900-50,y=40+i*30;
-      c.beginPath();c.arc(x,y,25,0,Math.PI*2);c.arc(x+20,y-10,20,0,Math.PI*2);c.arc(x+40,y,22,0,Math.PI*2);c.fill()}
+    // 1. 하늘 배경 그라데이션
+    const sky=c.createLinearGradient(0,0,0,DH*0.45);
+    sky.addColorStop(0,'#B8DAF4');
+    sky.addColorStop(0.7,'#D6EDF8');
+    sky.addColorStop(1,'#E8F4E6');
+    c.fillStyle=sky;
+    c.fillRect(0,0,DW,DH);
 
-    // 구멍 그리기
-    for(const h of this.holes){
-      c.fillStyle='rgba(0,0,0,.2)';c.beginPath();c.ellipse(h.x,h.y+10,50,22,0,0,Math.PI*2);c.fill();
-      c.fillStyle='#5D4037';c.beginPath();c.ellipse(h.x,h.y,50,22,0,0,Math.PI*2);c.fill();
-      c.fillStyle='#3E2723';c.beginPath();c.ellipse(h.x,h.y+2,40,16,0,0,Math.PI*2);c.fill();
+    // 2. 구름 (흰색~연녹 그라데이션)
+    for(let i=0;i<6;i++){
+      const bx=(i*130+this.time*12)%960-50;
+      const by=50+((i*47)%120);
+      const cloudGrad=c.createRadialGradient(bx,by,10,bx+20,by+10,70);
+      cloudGrad.addColorStop(0,'rgba(255,255,255,.95)');
+      cloudGrad.addColorStop(0.7,'rgba(240,252,240,.7)');
+      cloudGrad.addColorStop(1,'rgba(200,230,220,.3)');
+      c.fillStyle=cloudGrad;
+      c.beginPath();
+      c.arc(bx,by,38,0,Math.PI*2);c.arc(bx+30,by-8,32,0,Math.PI*2);
+      c.arc(bx+60,by+4,35,0,Math.PI*2);c.arc(bx+25,by+14,28,0,Math.PI*2);
+      c.fill();
     }
 
-    // 캐릭터 그리기
+    // 3. 배경 언덕 (3단)
+    // 먼 언덕
+    c.fillStyle='#A3D9A5';
+    c.beginPath();c.moveTo(0,DH*0.42);
+    c.bezierCurveTo(DW*0.3,DH*0.34,DW*0.7,DH*0.42,DW,DH*0.38);
+    c.lineTo(DW,DH*0.5);c.lineTo(0,DH*0.5);c.closePath();c.fill();
+    // 중간 언덕
+    c.fillStyle='#8FCA91';
+    c.beginPath();c.moveTo(0,DH*0.48);
+    c.bezierCurveTo(DW*0.25,DH*0.40,DW*0.6,DH*0.50,DW,DH*0.44);
+    c.lineTo(DW,DH*0.55);c.lineTo(0,DH*0.55);c.closePath();c.fill();
+    // 가까운 언덕 (게임 필드)
+    c.fillStyle='#78B879';
+    c.beginPath();c.moveTo(0,DH*0.52);
+    c.bezierCurveTo(DW*0.2,DH*0.46,DW*0.75,DH*0.54,DW,DH*0.48);
+    c.lineTo(DW,DH);c.lineTo(0,DH);c.closePath();c.fill();
+
+    // 4. 풀밭 필드 바닥 (밝은 초록)
+    const field=c.createLinearGradient(0,DH*0.56,0,DH);
+    field.addColorStop(0,'#70B673');
+    field.addColorStop(0.5,'#6BAA6E');
+    field.addColorStop(1,'#5D9E60');
+    c.fillStyle=field;c.fillRect(0,DH*0.56,DW,DH*0.44);
+
+    // 5. 구멍 그리기 (입체적)
+    for(const h of this.holes){
+      // 구멍 그림자 (아래)
+      c.fillStyle='rgba(0,0,0,.12)';
+      c.beginPath();c.ellipse(h.x+2,h.y+14,62,26,0,0,Math.PI*2);c.fill();
+      // 구멍 외곽 (밝은 갈색 테두리링)
+      const rimGrad=c.createLinearGradient(h.x,h.y-22,h.x,h.y+22);
+      rimGrad.addColorStop(0,'#8B7355');
+      rimGrad.addColorStop(0.5,'#7A6348');
+      rimGrad.addColorStop(1,'#6B4F36');
+      c.fillStyle=rimGrad;
+      c.beginPath();c.ellipse(h.x,h.y,62,26,0,0,Math.PI*2);c.fill();
+      // 구멍 안쪽 (어두운 갈색 심)
+      const innerGrad=c.createRadialGradient(h.x,h.y+4,8,h.x,h.y,48);
+      innerGrad.addColorStop(0,'#3A2415');
+      innerGrad.addColorStop(0.7,'#2D1A0C');
+      innerGrad.addColorStop(1,'#1F1008');
+      c.fillStyle=innerGrad;
+      c.beginPath();c.ellipse(h.x,h.y+4,48,20,0,0,Math.PI*2);c.fill();
+      // 구멍 가장자리 하이라이트
+      c.strokeStyle='rgba(139,115,85,.5)';c.lineWidth=1.5;
+      c.beginPath();c.ellipse(h.x,h.y,60,24,0,0,Math.PI*2);c.stroke();
+    }
+
+    // 6. 캐릭터 그리기 (구멍 위에)
     for(const h of this.holes){
       if(h.state==='hidden')continue;
-      const img=this.ld.get(h.judged?(h.state==='perfect'?5:10):(this.time*.05|h.mode||0));
-      const cs=130*h.scale;
-      if(h.state!=='hidden'){
-        const fi=h.state==='appearing'?Math.min(h.timer*4,1):h.state==='perfect'?.7:h.state==='missing'?.5:1;
-        // 캐릭터 프레임
-        const fIdx=h.state==='perfect'?6:h.state==='missing'?11:0;
-        const img=this.ld.get(fIdx);
-        if(img&&img.complete&&img.naturalWidth){
-          c.save();c.globalAlpha=fi;
-          c.drawImage(img,h.x-cs/2,h.y-cs/2-20,cs,cs);
-          c.restore();
-        }
-        // 타이머 링
-        if(h.state==='ready'&&!h.judged){
-          const ratio=h.timeLeft/h.totalTime;
-          const urgent=ratio<.3;
-          c.lineWidth=4;
-          c.strokeStyle=urgent?'rgba(255,50,50,.8)':'rgba(255,255,255,.5)';
-          c.beginPath();c.arc(h.x,h.y-10,65,0,Math.PI*2);c.stroke();
-          c.strokeStyle=urgent?'#FF5252':h.golden?'#FFD700':'#69F0AE';
-          c.lineWidth=6;c.lineCap='round';
-          c.beginPath();c.arc(h.x,h.y-10,65,-Math.PI/2,-Math.PI/2+ratio*Math.PI*2);c.stroke();
-          c.lineCap='butt';
-          c.font='bold 20px sans-serif';c.textAlign='center';
-          c.fillStyle=urgent?'#FF5252':'#FFEB3B';
-          c.fillText('TAP! 🧻',h.x,h.y-85);
-        }
+      const cs=140*h.scale;
+      const fi=h.state==='appearing'?Math.min(h.timer*4,1):h.state==='perfect'?.7:h.state==='missing'?.5:1;
+      const fIdx=h.state==='perfect'?6:h.state==='missing'?11:0;
+      const img=this.ld.get(fIdx);
+      if(img&&img.complete&&img.naturalWidth){
+        c.save();c.globalAlpha=fi;
+        // 구멍 중앙 위에 캐릭터 배치
+        c.drawImage(img,h.x-cs/2,h.y-cs*0.65,cs,cs*0.9);
+        c.restore();
+      }
+      // 타이머 링
+      if(h.state==='ready'&&!h.judged){
+        const ratio=h.timeLeft/h.totalTime;
+        const urgent=ratio<.3;
+        c.lineWidth=5;
+        c.strokeStyle=urgent?'rgba(255,80,80,.6)':'rgba(255,255,255,.5)';
+        c.beginPath();c.arc(h.x,h.y-50,72,0,Math.PI*2);c.stroke();
+        c.strokeStyle=urgent?'#FF5252':h.golden?'#FFD700':'#69F0AE';
+        c.lineWidth=7;c.lineCap='round';
+        c.beginPath();c.arc(h.x,h.y-50,72,-Math.PI/2,-Math.PI/2+ratio*Math.PI*2);c.stroke();
+        c.lineCap='butt';
+        c.font='bold 22px Jua,sans-serif';c.textAlign='center';
+        c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=3;c.strokeText('TAP! 🧻',h.x,h.y-90);
+        c.fillStyle=urgent?'#FF5252':'#FFEB3B';
+        c.fillText('TAP! 🧻',h.x,h.y-90);
       }
     }
 
-    // 파티클
+    // 7. 파티클, 플로팅 텍스트
     this.particles.forEach(p=>p.draw(c));
     this.floats.forEach(t=>t.draw(c));
 
-    // 커서: 꼬깔콘 + 돌돌 말린 휴지
+    // 8. 커서: 꼬깔콘 + 돌돌 말린 휴지
     if(this.cursorVis){
       this.drawTissueCursor(c, this.cursorX, this.cursorY);
     }
 
-    // HUD
+    // 9. 하단 잔디 장식
+    const grassY=DH*0.92;
+    c.strokeStyle='#4A8C4C';c.lineWidth=2;
+    for(let i=0;i<DW;i+=12){
+      const h=8+Math.sin(i*0.3+this.time*2)*4;
+      c.beginPath();c.moveTo(i,grassY);c.lineTo(i+2,grassY-h);c.stroke();
+    }
+    c.fillStyle='#5D9E60';
+    c.fillRect(0,grassY,DW,DH-grassY);
+
+    // 10. HUD
     if(this.state==='PLAYING'){
-      // 배경 바
-      c.fillStyle='rgba(0,0,0,.3)';
-      c.beginPath();c.moveTo(16,0);c.lineTo(DW-16,0);c.arcTo(DW,0,DW,16,16);c.lineTo(DW,66);c.lineTo(0,66);c.lineTo(0,16);c.arcTo(0,0,16,0,16);c.fill();
+      // 상단 HUD 배경 (유리처럼)
+      c.fillStyle='rgba(120,170,200,.45)';
+      c.beginPath();c.moveTo(20,4);c.lineTo(DW-20,4);c.arcTo(DW-4,4,DW-4,20,16);
+      c.lineTo(DW-4,86);c.lineTo(4,86);c.lineTo(4,20);c.arcTo(4,4,20,4,16);c.closePath();c.fill();
+      c.fillStyle='rgba(255,255,255,.3)';
+      c.beginPath();c.moveTo(20,4);c.lineTo(DW-20,4);c.arcTo(DW-4,4,DW-4,12,8);
+      c.lineTo(DW-4,36);c.lineTo(4,36);c.lineTo(4,12);c.arcTo(4,4,20,4,8);c.closePath();c.fill();
       
       // 점수
-      c.font='bold 32px sans-serif';c.textAlign='left';c.textBaseline='middle';
-      c.fillStyle='#FFD54F';c.fillText('⭐ '+this.score,20,33);
+      c.font='bold 28px Jua,sans-serif';c.textAlign='left';c.textBaseline='middle';
+      c.fillStyle='#FFE156';c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=3;
+      c.strokeText('⭐ '+this.score,24,22);
+      c.fillText('⭐ '+this.score,24,22);
       
       // 콤보
       if(this.combo>=2){
-        c.textAlign='right';c.font='bold 28px sans-serif';
-        c.fillStyle=this.combo>=5?'#FFD700':'#69F0AE';
-        c.fillText('🔥 x'+this.combo,DW-20,33);
+        c.textAlign='right';c.font='bold 26px Jua,sans-serif';
+        const comboCol=this.combo>=5?'#FFE156':'#7BFFCB';
+        c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=3;
+        c.strokeText(' x'+this.combo,DW-24,22);
+        c.fillStyle=comboCol;c.fillText('🔥 x'+this.combo,DW-24,22);
       }
       
-      // 하트
-      c.textAlign='center';
+      // 하트 (채워진/비운)
+      c.textAlign='center';c.font='26px sans-serif';
       for(let i=0;i<MAX_HP;i++){
-        c.fillText(i<this.hp?'❤️':'',DW/2-(MAX_HP-1)*15+i*30,33);
+        const hx=DW/2-(MAX_HP-1)*18+i*36;
+        if(i<this.hp){
+          c.fillText('❤️',hx,22);
+        }else{
+          c.fillStyle='rgba(0,0,0,.4)';
+          c.fillText('🖤',hx,22);
+        }
       }
 
       // 플레이어 이름
-      c.textAlign='left';c.font='bold 16px sans-serif';c.fillStyle='#FFEB3B';
-      c.fillText('현재: '+this.players[this.curPlayer].name,12,90);
+      c.textAlign='left';c.font='bold 14px Jua,sans-serif';c.fillStyle='#FFEB3B';
+      c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=2;
+      c.strokeText('🀄 '+this.players[this.curPlayer].name,12,74);
+      c.fillText('🀄 '+this.players[this.curPlayer].name,12,74);
     }
   }
 
