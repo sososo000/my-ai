@@ -511,12 +511,23 @@ window.addEventListener('load',()=>{
     addBtn.disabled=game.players.length>=MAX_P;
   };
   
+  let lastAddTime=0;
+  const clearInput=()=>{
+    input.value='';
+    input.select();
+    // 브라우저가 값을 복원하는 경우 setTimeout으로 재차 비움
+    setTimeout(()=>{if(input.value!==null){input.value=''}},0);
+  };
   const addPlayer=()=>{
+    const now=Date.now();
+    if(now-lastAddTime<200)return; // 200ms 내 중복 호출 방지
     const v=input.value.trim();
     if(!v||game.players.length>=MAX_P)return;
     if(game.players.some(p=>p.name===v))return;
+    lastAddTime=now;
     game.players.push({name:v,score:0,maxCombo:0});
-    input.value='';input.focus();
+    clearInput();
+    input.focus();
     renderList();
   };
   
