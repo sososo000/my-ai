@@ -585,8 +585,7 @@ window.addEventListener('load',()=>{
         d.className='board-row rank-'+(i+1);
         const rankLabel = i<3 ? medals[i] : (i+1)+'등';
         const comboText = r.bestCombo>0 ? ' · 🔥 x'+r.bestCombo : '';
-        const playsText = r.plays>1 ? ' · '+r.plays+'판' : '';
-        d.innerHTML='<span class="board-rank">'+rankLabel+'</span><span class="board-name">'+r.name+'</span><span class="board-score">⭐ '+r.bestScore+playsText+'</span>';
+        d.innerHTML='<span class="board-rank">'+rankLabel+'</span><span class="board-name">'+r.name+'</span><span class="board-score">⭐ '+r.bestScore+'</span>';
         list.appendChild(d);
       });
     }
