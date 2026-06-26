@@ -372,41 +372,7 @@ class Game{
         c.restore();
       }
 
-      // 콧물이 흘러내리는 비주얼 (ready 상태일 때)
-      if(h.state==='ready'&&!h.judged){
-        const ratio = h.timeLeft / h.totalTime;
-        // 콧물 시작점 (캐릭터 코 위치 - 캐릭터 중심에서 약간 위)
-        const snotStartX = h.x;
-        const snotStartY = h.y - cs*0.65 + 30;
-        // 콧물 끝 (시간이 지날수록 아래로 늘어남)
-        const snotLen = 30 + (1-ratio) * 80;
-        const snotEndY = snotStartY + snotLen;
-        // 흔들리는 효과
-        const wobble = Math.sin(this.time*8+h.idx)*3;
-        
-        // 물 흐름 (반투명 맑은 연두색)
-        c.strokeStyle = h.golden ? 'rgba(255,220,80,.85)' : 'rgba(100,200,100,.8)';
-        c.lineWidth = 5;
-        c.lineCap = 'round';
-        c.beginPath();
-        c.moveTo(snotStartX, snotStartY);
-        c.quadraticCurveTo(snotStartX+wobble, (snotStartY+snotEndY)/2, snotStartX+wobble*0.5, snotEndY);
-        c.stroke();
-        
-        // 콧물 끝 물방울
-        c.fillStyle = h.golden ? 'rgba(255,230,100,.9)' : 'rgba(120,220,120,.9)';
-        c.beginPath();
-        c.ellipse(snotStartX+wobble*0.5, snotEndY+4, 5, 7, 0, 0, Math.PI*2);
-        c.fill();
-        
-        // 콧물 하이라이트
-        c.strokeStyle = 'rgba(255,255,255,.6)';
-        c.lineWidth = 1.5;
-        c.beginPath();
-        c.moveTo(snotStartX-2, snotStartY+5);
-        c.lineTo(snotStartX-2+wobble*0.3, snotEndY-8);
-        c.stroke();
-      }
+      // ✅ Canvas 콧물 제거 - 캐릭터 이미지 자체에 물이 이미 그려져 있음 (02→03→04→05 프래임)
 
       // 타이머 링
       if(h.state==='ready'&&!h.judged){
