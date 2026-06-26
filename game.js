@@ -7,9 +7,9 @@ const HOLES=[
 ];
 const NH=HOLES.length,MAX_P=8,MAX_HP=5;
 const STORAGE_KEY='tissue-shoot-records';
-// 속도 개선: 더 빠른 스폰, 더 짧은 타이밍
-const BASE_SPAWN_INTERVAL=0.8; // 원래 1.2
-const BASE_AVAILABLE_TIME=1.1;  // 원래 1.5
+// 밸런스: 더 여유있는 스폰과 타이밍
+const BASE_SPAWN_INTERVAL=1.2;
+const BASE_AVAILABLE_TIME=1.5;
 const FNAME=['01-idle-smile','02-nose-tickle-anticipation','03-snot-starts','04-snot-stretches',
   '05-peak-timing-target','06-perfect-hit-surprise','07-tissue-pop-into-nose',
   '08-relieved-sparkle-smile','09-wink','10-combo-happy-bounce','11-missed-timing-panic',
@@ -163,8 +163,8 @@ class Game{
       if(avail.length===0)return;
       const h=avail[Math.floor(Math.random()*avail.length)];
       h.appear(BASE_AVAILABLE_TIME,false);
-      // 가끔 2개 동시 스폰 (콤보 높을 때)
-      if(this.combo >= 5 && Math.random() < 0.35){
+      // 콤보가 높을 때 가끔 2개 동시 스폰
+      if(this.combo >= 8 && Math.random() < 0.15){
         const avail2=this.holes.filter(h2=>h2.state==='hidden'&&h2!==h);
         if(avail2.length>0){
           const h2=avail2[Math.floor(Math.random()*avail2.length)];
@@ -449,13 +449,16 @@ class Game{
   start(){this.lastTs=performance.now();this.loop(this.lastTs)}
 }
 
-// 초기화 함수
-function initGame(){
-  const cv=document.getElementById('gameCanvas');
+// 초기화 함수 (canvas를 인자로 받아 Next.js에서도 재사용 가능)
+function initGame(canvasEl){
+  const cv=canvasEl||document.getElementById('gameCanvas');
   if(!cv)return;
   cv.style.cursor='none';
   
   const game=new Game(cv);
+  
+  // IME 조합 상태 추적 (한글 입력 시 중복 방지)
+  let isComposing=false;
   
   // UI 요소
   const $=id=>document.getElementById(id);
@@ -531,8 +534,17 @@ function initGame(){
     renderList();
   };
   
+  // IME 이벤트
+  input.addEventListener('compositionstart',()=>{isComposing=true});
+  input.addEventListener('compositionend',()=>{isComposing=false});
+  
   addBtn.addEventListener('click',e=>{e.preventDefault();addPlayer()});
-  input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPlayer()}});
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&!isComposing){
+      e.preventDefault();
+      addPlayer();
+    }
+  });
   clearBtn.addEventListener('click',()=>{game.players=[];game.curPlayer=0;renderList()});
   
   // 모든 플레이어 기록 저장 (턴 종료 시 호출)
@@ -633,9 +645,15 @@ function initGame(){
   game.ld.load(()=>{game.start()});
 }
 
-// Next.js 환경에서도 동작하도록 즉시 실행 + 폴백
+// Next.js에서 window.initTissueGame로 호출 가능하게 노출
+if(typeof window!=='undefined'){
+  window.initTissueGame=initGame;
+}
+
+// standalone HTML에서도 자동 실행
 if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',initGame);
+  document.addEventListener('DOMContentLoaded',()=>initGame());
 }else{
-  initGame();
+  var existingCanvas=document.getElementById('gameCanvas');
+  if(existingCanvas)initGame();
 }

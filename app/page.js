@@ -1,80 +1,102 @@
-import Script from 'next/script';
 import Link from 'next/link';
-import GameBodyMode from './game-body-mode';
 
-export default function GamePage() {
+export default function HomePage() {
   return (
-    <main id="wrapper">
-      <GameBodyMode />
-      <canvas id="gameCanvas" />
+    <main className="home-page">
+      {/* 배경 파티클 */}
+      <div className="home-bg-deco" aria-hidden="true" />
 
-      <Link className="chat-link" href="/chat" aria-label="AI 친구 채팅으로 이동">
-        AI 친구
-      </Link>
-
-      <div id="lobby">
-        <div className="lobby-box">
-          <div className="lobby-header">
-            <span className="lobby-emoji">🧻</span>
-            <div className="lobby-title">휴지 슛!</div>
-            <span className="lobby-emoji">💦</span>
+      <div className="home-container">
+        {/* 좌측: 타이틀 + 캐릭터 */}
+        <div className="home-left">
+          {/* 장식 별 */}
+          <div className="deco-stars" aria-hidden="true">
+            <span className="deco-star deco-star-1">⭐</span>
+            <span className="deco-star deco-star-2">✨</span>
+            <span className="deco-star deco-star-3"></span>
+            <span className="deco-star deco-star-4">⭐</span>
           </div>
-          <div className="lobby-subtitle">꼬깔콘 휴지로 콧물을 쏙! · 타이밍 리듬 액션</div>
 
-          <div className="player-list" id="playerList">
-            <div className="empty-hint">
-              👇 아래에 이름을 입력하고 <b>+</b> 버튼을 눌러보세요
+          {/* 타이틀 뱃지 */}
+          <div className="title-badge">
+            <span className="title-badge-emoji"></span>
+            <h1 className="home-title">휴지 슛!</h1>
+            <span className="title-badge-emoji">💦</span>
+          </div>
+
+          <p className="home-subtitle">
+           꼬깔콘 휴지로 콧물을 !
+            <br />
+            타이밍 리듬 액션
+          </p>
+
+          {/* 캐릭터 스테이지 */}
+          <div className="home-stage">
+            {/* 무지개 링 */}
+            <div className="stage-ring ring-1" />
+            <div className="stage-ring ring-2" />
+            {/* 바닥 그림자 */}
+            <div className="otter-shadow" />
+            {/* 수달 캐릭터 */}
+            <div className="home-otter">
+              <img
+                src="/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png"
+                alt="휴지 수달 캐릭터"
+              />
+            </div>
+            {/* 물방울/휴지 장식 */}
+            <div className="stage-deco stage-deco-1"></div>
+            <div className="stage-deco stage-deco-2"></div>
+            <div className="stage-deco stage-deco-3">💦</div>
+          </div>
+        </div>
+
+        {/* 우측: 메뉴 패널 */}
+        <div className="home-right">
+          <div className="menu-panel">
+            <div className="menu-panel-header">
+              <span className="menu-panel-emoji"></span>
+              <span className="menu-panel-label">무엇을 할까요?</span>
+            </div>
+
+            <div className="menu-list">
+              <Link href="/game" className="menu-item menu-game">
+                <div className="menu-icon menu-icon-game">
+                  <img
+                    src="/assets/characters/tissue-otter/frames/cropped/06-perfect-hit-surprise.png"
+                    alt="게임"
+                    className="menu-icon-img"
+                  />
+                </div>
+                <div className="menu-item-info">
+                  <span className="menu-item-name">콧물쏙 게임</span>
+                  <span className="menu-item-desc">타이밍 리듬 액션!</span>
+                </div>
+                <div className="menu-item-arrow">›</div>
+              </Link>
+
+              <Link href="/chat" className="menu-item menu-chat">
+                <div className="menu-icon menu-icon-chat">
+                  <img
+                    src="/assets/characters/tissue-otter/frames/cropped/08-relieved-sparkle-smile.png"
+                    alt="AI 친구"
+                    className="menu-icon-img"
+                  />
+                </div>
+                <div className="menu-item-info">
+                  <span className="menu-item-name">AI 수달 친구</span>
+                  <span className="menu-item-desc"> 뭐든 물어봐!</span>
+                </div>
+                <div className="menu-item-arrow">›</div>
+              </Link>
             </div>
           </div>
 
-          <div className="input-row">
-            <input
-              id="nameInput"
-              type="text"
-              maxLength="10"
-              placeholder="플레이어 닉네임 입력!"
-              inputMode="text"
-              autoComplete="off"
-            />
-            <button id="addBtn" title="add">+</button>
+          <div className="home-hint">
+            ✨ 하나를 골라볼까?
           </div>
-
-          <div className="start-row">
-            <button id="clearBtn">초기화</button>
-            <button id="startBtn" disabled>
-              🎮게임 시작
-            </button>
-          </div>
-
-          <div className="hint">✨ 1명부터 플레이 가능 · 한글/영어 입력 가능 · 최대 8명</div>
         </div>
       </div>
-
-      <div id="turnOverlay" className="overlay hidden">
-        <div className="turn-card">
-          <div id="turnPrevName" className="turn-prev-name" />
-          <div id="turnPrevScore" className="turn-prev-score" />
-          <div id="turnPrevCo" className="turn-prev-combo" />
-          <div className="turn-next-label">다음 플레이어</div>
-          <div id="turnNextName" className="turn-next-name" />
-          <button id="turnNextBtn" className="action-btn">
-            👆 시작!
-          </button>
-          <div id="turnOrder" className="turn-order" />
-        </div>
-      </div>
-
-      <div id="boardOverlay" className="overlay hidden">
-        <div className="board-card">
-          <div className="board-title">🏆 최종 순위 🏆</div>
-          <div id="boardList" />
-          <button id="boardAgainBtn" className="action-btn">
-            🔄 다시하기
-          </button>
-        </div>
-      </div>
-
-      <Script src="/game.js" strategy="afterInteractive" />
     </main>
   );
 }
