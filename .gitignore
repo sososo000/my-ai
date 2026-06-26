@@ -13,6 +13,13 @@ __pycache__/
 # Logs
 *.log
 .vercel
+.env
+.env.local
+.env.*.local
 
 # Dependencies
 node_modules/
+
+# Next.js
+.next/
+out/

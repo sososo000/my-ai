@@ -1,0 +1,392 @@
+{
+  "character": "Tissue Otter",
+  "description": "Cute baby otter mascot for the rhythm tap game Tissue Shot! Snot Pop!",
+  "frameCount": 24,
+  "sourceSheet": "assets/characters/tissue-otter/source/tissue-otter-24pose-sheet-alpha.png",
+  "frames": [
+    {
+      "index": 1,
+      "name": "idle-smile",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/01-idle-smile.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/01-idle-smile.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 0,
+        "right": 209,
+        "bottom": 314
+      },
+      "croppedSize": {
+        "width": 199,
+        "height": 273
+      }
+    },
+    {
+      "index": 2,
+      "name": "nose-tickle-anticipation",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/02-nose-tickle-anticipation.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/02-nose-tickle-anticipation.png",
+      "sourceCell": {
+        "left": 209,
+        "top": 0,
+        "right": 418,
+        "bottom": 314
+      },
+      "croppedSize": {
+        "width": 200,
+        "height": 271
+      }
+    },
+    {
+      "index": 3,
+      "name": "snot-starts",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/03-snot-starts.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/03-snot-starts.png",
+      "sourceCell": {
+        "left": 418,
+        "top": 0,
+        "right": 627,
+        "bottom": 314
+      },
+      "croppedSize": {
+        "width": 190,
+        "height": 264
+      }
+    },
+    {
+      "index": 4,
+      "name": "snot-stretches",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/04-snot-stretches.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/04-snot-stretches.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 0,
+        "right": 836,
+        "bottom": 314
+      },
+      "croppedSize": {
+        "width": 199,
+        "height": 278
+      }
+    },
+    {
+      "index": 5,
+      "name": "peak-timing-target",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/05-peak-timing-target.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/05-peak-timing-target.png",
+      "sourceCell": {
+        "left": 836,
+        "top": 0,
+        "right": 1045,
+        "bottom": 314
+      },
+      "croppedSize": {
+        "width": 185,
+        "height": 279
+      }
+    },
+    {
+      "index": 6,
+      "name": "perfect-hit-surprise",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/06-perfect-hit-surprise.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/06-perfect-hit-surprise.png",
+      "sourceCell": {
+        "left": 1045,
+        "top": 0,
+        "right": 1254,
+        "bottom": 314
+      },
+      "croppedSize": {
+        "width": 190,
+        "height": 288
+      }
+    },
+    {
+      "index": 7,
+      "name": "tissue-pop-into-nose",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/07-tissue-pop-into-nose.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/07-tissue-pop-into-nose.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 314,
+        "right": 209,
+        "bottom": 627
+      },
+      "croppedSize": {
+        "width": 193,
+        "height": 268
+      }
+    },
+    {
+      "index": 8,
+      "name": "relieved-sparkle-smile",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/08-relieved-sparkle-smile.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/08-relieved-sparkle-smile.png",
+      "sourceCell": {
+        "left": 209,
+        "top": 314,
+        "right": 418,
+        "bottom": 627
+      },
+      "croppedSize": {
+        "width": 203,
+        "height": 272
+      }
+    },
+    {
+      "index": 9,
+      "name": "wink",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/09-wink.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/09-wink.png",
+      "sourceCell": {
+        "left": 418,
+        "top": 314,
+        "right": 627,
+        "bottom": 627
+      },
+      "croppedSize": {
+        "width": 198,
+        "height": 257
+      }
+    },
+    {
+      "index": 10,
+      "name": "combo-happy-bounce",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/10-combo-happy-bounce.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/10-combo-happy-bounce.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 314,
+        "right": 836,
+        "bottom": 627
+      },
+      "croppedSize": {
+        "width": 192,
+        "height": 275
+      }
+    },
+    {
+      "index": 11,
+      "name": "missed-timing-panic",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/11-missed-timing-panic.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/11-missed-timing-panic.png",
+      "sourceCell": {
+        "left": 836,
+        "top": 314,
+        "right": 1045,
+        "bottom": 627
+      },
+      "croppedSize": {
+        "width": 199,
+        "height": 255
+      }
+    },
+    {
+      "index": 12,
+      "name": "snot-covers-face",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/12-snot-covers-face.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/12-snot-covers-face.png",
+      "sourceCell": {
+        "left": 1045,
+        "top": 314,
+        "right": 1254,
+        "bottom": 627
+      },
+      "croppedSize": {
+        "width": 181,
+        "height": 255
+      }
+    },
+    {
+      "index": 13,
+      "name": "teary-sad",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/13-teary-sad.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/13-teary-sad.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 627,
+        "right": 209,
+        "bottom": 940
+      },
+      "croppedSize": {
+        "width": 190,
+        "height": 271
+      }
+    },
+    {
+      "index": 14,
+      "name": "recovery-sniffle",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/14-recovery-sniffle.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/14-recovery-sniffle.png",
+      "sourceCell": {
+        "left": 209,
+        "top": 627,
+        "right": 418,
+        "bottom": 940
+      },
+      "croppedSize": {
+        "width": 187,
+        "height": 245
+      }
+    },
+    {
+      "index": 15,
+      "name": "left-peek",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/15-left-peek.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/15-left-peek.png",
+      "sourceCell": {
+        "left": 418,
+        "top": 627,
+        "right": 627,
+        "bottom": 940
+      },
+      "croppedSize": {
+        "width": 153,
+        "height": 231
+      }
+    },
+    {
+      "index": 16,
+      "name": "right-peek",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/16-right-peek.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/16-right-peek.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 627,
+        "right": 836,
+        "bottom": 940
+      },
+      "croppedSize": {
+        "width": 144,
+        "height": 230
+      }
+    },
+    {
+      "index": 17,
+      "name": "popup-from-hole",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/17-popup-from-hole.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/17-popup-from-hole.png",
+      "sourceCell": {
+        "left": 836,
+        "top": 627,
+        "right": 1045,
+        "bottom": 940
+      },
+      "croppedSize": {
+        "width": 199,
+        "height": 220
+      }
+    },
+    {
+      "index": 18,
+      "name": "duck-down",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/18-duck-down.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/18-duck-down.png",
+      "sourceCell": {
+        "left": 1045,
+        "top": 627,
+        "right": 1254,
+        "bottom": 940
+      },
+      "croppedSize": {
+        "width": 184,
+        "height": 158
+      }
+    },
+    {
+      "index": 19,
+      "name": "clap",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/19-clap.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/19-clap.png",
+      "sourceCell": {
+        "left": 0,
+        "top": 940,
+        "right": 209,
+        "bottom": 1254
+      },
+      "croppedSize": {
+        "width": 193,
+        "height": 246
+      }
+    },
+    {
+      "index": 20,
+      "name": "dizzy-wobble",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/20-dizzy-wobble.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/20-dizzy-wobble.png",
+      "sourceCell": {
+        "left": 209,
+        "top": 940,
+        "right": 418,
+        "bottom": 1254
+      },
+      "croppedSize": {
+        "width": 207,
+        "height": 259
+      }
+    },
+    {
+      "index": 21,
+      "name": "big-inhale",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/21-big-inhale.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/21-big-inhale.png",
+      "sourceCell": {
+        "left": 418,
+        "top": 940,
+        "right": 627,
+        "bottom": 1254
+      },
+      "croppedSize": {
+        "width": 207,
+        "height": 239
+      }
+    },
+    {
+      "index": 22,
+      "name": "sneeze-windup",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/22-sneeze-windup.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/22-sneeze-windup.png",
+      "sourceCell": {
+        "left": 627,
+        "top": 940,
+        "right": 836,
+        "bottom": 1254
+      },
+      "croppedSize": {
+        "width": 188,
+        "height": 221
+      }
+    },
+    {
+      "index": 23,
+      "name": "sneeze-release",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/23-sneeze-release.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/23-sneeze-release.png",
+      "sourceCell": {
+        "left": 836,
+        "top": 940,
+        "right": 1045,
+        "bottom": 1254
+      },
+      "croppedSize": {
+        "width": 209,
+        "height": 219
+      }
+    },
+    {
+      "index": 24,
+      "name": "game-over-pout",
+      "cropped": "assets/characters/tissue-otter/frames/cropped/24-game-over-pout.png",
+      "normalized320": "assets/characters/tissue-otter/frames/normalized-320/24-game-over-pout.png",
+      "sourceCell": {
+        "left": 1045,
+        "top": 940,
+        "right": 1254,
+        "bottom": 1254
+      },
+      "croppedSize": {
+        "width": 193,
+        "height": 226
+      }
+    }
+  ]
+}
