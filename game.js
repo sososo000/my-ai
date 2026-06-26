@@ -198,91 +198,64 @@ class Game{
     // 살짝 기울여서 자연스러움
     c.rotate(-0.15);
 
-    // === 아래: 꼬깔콘 (콘지) ===
-    // 콘 본체 (노란색-갈색 꼬깔)
-    const coneH = 32, coneW = 22;
-    const coneGrad = c.createLinearGradient(-coneW/2, 0, coneW/2, coneH);
-    coneGrad.addColorStop(0, '#F5D070');   // 밝은 노란
-    coneGrad.addColorStop(0.5, '#D4A030'); // 중간 황금
-    coneGrad.addColorStop(1, '#8B5E20');   // 진한 갈색 끝
-    c.fillStyle = coneGrad;
-    c.beginPath();
-    c.moveTo(0, coneH + 4);            // 끝점 (아래 뾰족)
-    c.lineTo(-coneW/2, -2);            // 좌상단
-    c.quadraticCurveTo(0, -6, coneW/2, -2);
-    c.lineTo(0, coneH + 4);
-    c.closePath();
-    c.fill();
-    // 그릴 선
-    c.strokeStyle = '#6B3F10';
-    c.lineWidth = 1.2;
-    c.stroke();
-    // 와플 패턴 (콘 질감)
-    c.strokeStyle = 'rgba(107,63,16,.35)';
-    c.lineWidth = 0.8;
-    for(let i = 1; i < 4; i++){
-      const t = i/4;
-      const y = -2 + (coneH+4 - (-2)) * t;
-      const w = coneW/2 * (1-t*0.85);
-      c.beginPath();
-      c.moveTo(-w, y);
-      c.lineTo(w, y);
-      c.stroke();
-    }
-    for(let i = -2; i <= 2; i++){
-      const x = i * 4;
-      c.beginPath();
-      c.moveTo(x, -2);
-      c.lineTo(x*0.15, coneH+2);
-      c.stroke();
-    }
+    // === 돌돌 말린 휴지 모양 커서 ===
+    const tw = 22, th = 18;
 
-    // === 위: 돌돌 말린 휴지 토핑 ===
-    // 휴지 베이스 (콘 꼭대기에 올린 크림처럼 둥글게)
-    const tw = 18, th = 14;
-    // 그림자
-    c.fillStyle = 'rgba(0,0,0,.12)';
+    // 바닥 그림자
+    c.fillStyle = 'rgba(0,0,0,.15)';
     c.beginPath();
-    c.ellipse(1, -2, tw/2+2, 5, 0, 0, Math.PI*2);
+    c.ellipse(0, 4, tw/2+2, 5, 0, 0, Math.PI*2);
     c.fill();
-    // 크림처럼 둥근 흰 휴지 뭉치
-    const tGrad = c.createRadialGradient(-2,-8,2, 0,-6,16);
+
+    // 돌돌 말린 휴지 본체 (두툼한 원통)
+    // 측면 (약간의 원통 형태)
+    c.fillStyle = '#E8E8E8';
+    c.beginPath();
+    c.ellipse(0, 4, tw/2, 6, 0, 0, Math.PI);
+    c.fill();
+
+    // 본체 (흰색 원)
+    const tGrad = c.createRadialGradient(-3,-3,2, 0,0,18);
     tGrad.addColorStop(0, '#FFFFFF');
-    tGrad.addColorStop(0.6, '#F0F0F0');
+    tGrad.addColorStop(0.5, '#F5F5F5');
     tGrad.addColorStop(1, '#D8D8D8');
     c.fillStyle = tGrad;
     c.beginPath();
-    // 뭉게뭉게 크림 패턴
-    c.moveTo(-tw/2, -2);
-    c.quadraticCurveTo(-tw/2-2, -10, -6, -14);
-    c.quadraticCurveTo(-3, -18, 0, -16);
-    c.quadraticCurveTo(3, -18, 6, -14);
-    c.quadraticCurveTo(tw/2+2, -10, tw/2, -2);
-    c.quadraticCurveTo(tw/2-2, 2, 0, 2);
-    c.quadraticCurveTo(-tw/2+2, 2, -tw/2, -2);
-    c.closePath();
+    c.arc(0, 0, tw/2, 0, Math.PI*2);
     c.fill();
-    c.strokeStyle = '#B0B0B0';
-    c.lineWidth = 1;
+    // 테두리
+    c.strokeStyle = '#B8B8B8';
+    c.lineWidth = 1.2;
     c.stroke();
 
-    // 휴지 말린 spirals (둥글게 말린 라인)
-    c.strokeStyle = 'rgba(140,140,140,.55)';
-    c.lineWidth = 1;
+    // 돌돌 말린 나선 패턴 (핵심!)
+    c.strokeStyle = 'rgba(150,150,150,.5)';
+    c.lineWidth = 1.3;
+    // 중심 나선
     c.beginPath();
-    c.arc(-3, -9, 4, 0.3, Math.PI*1.6);
+    c.arc(0, -1, 3, 0.2, Math.PI*1.8);
+    c.stroke();
+    // 바깥 나선
+    c.beginPath();
+    c.arc(-1, -1, 6, 0.5, Math.PI*1.6);
     c.stroke();
     c.beginPath();
-    c.arc(4, -10, 3.5, -0.5, Math.PI*1.4);
+    c.arc(1, -1, 9, 0.3, Math.PI*1.5);
     c.stroke();
+
+    // 휴지 말린 가장자리 (두툼하게)
+    c.fillStyle = '#F0F0F0';
+    c.strokeStyle = '#C0C0C0';
+    c.lineWidth = 0.8;
     c.beginPath();
-    c.arc(0, -6, 6, 0.2, Math.PI*1.3);
+    c.ellipse(0, -tw/2, 6, 4, 0, 0, Math.PI*2);
+    c.fill();
     c.stroke();
 
     // 반짝이 하이라이트
-    c.fillStyle = 'rgba(255,255,255,.8)';
+    c.fillStyle = 'rgba(255,255,255,.85)';
     c.beginPath();
-    c.ellipse(-4, -14, 3, 1.5, -0.3, 0, Math.PI*2);
+    c.ellipse(-4, -5, 4, 2, -0.3, 0, Math.PI*2);
     c.fill();
 
     c.restore();
