@@ -340,12 +340,30 @@ class Game{
       c.beginPath();c.ellipse(h.x,h.y,60,24,0,0,Math.PI*2);c.stroke();
     }
 
-    // 6. 캐릭터 그리기 (구멍 위에)
+    // 6. 캐릭터 그리기 (구멍 위에) - 시간에 따라 프래임 전환
+    // 프래임 매핑:
+    // appearing(17) → ready: 02(nose-tickle) → 03(snot-starts) → 04(stretches) → 05(peak)
+    // perfect: 06(surprise) → 07(tissue-pop) → 08(relieved)
+    // missing: 11(panic) → 12(snot-covers)
+    const READY_FRAMES = [1, 2, 3, 4];  // 인덱스 (0-based: 02~05)
     for(const h of this.holes){
       if(h.state==='hidden')continue;
       const cs=140*h.scale;
       const fi=h.state==='appearing'?Math.min(h.timer*4,1):h.state==='perfect'?.7:h.state==='missing'?.5:1;
-      const fIdx=h.state==='perfect'?6:h.state==='missing'?11:0;
+      let fIdx;
+      if(h.state==='appearing'){
+        fIdx=16; // popup-from-hole (0-based)
+      }else if(h.state==='ready'&&!h.judged){
+        // ready 상태: 시간에 따라 프래임 전환
+        const ratio=h.timeLeft/h.totalTime;
+        // ratio 1→0 으로 감소, 프래임을 0→3 으로 증가
+        const phase = Math.min(3, Math.floor((1-ratio)*4));
+        fIdx = READY_FRAMES[phase];
+      }else if(h.state==='perfect'){
+        fIdx = h.timer < 0.3 ? 6 : (h.timer < 0.6 ? 7 : 8);
+      }else{ // missing
+        fIdx = h.timer < 0.3 ? 11 : 12;
+      }
       const img=this.ld.get(fIdx);
       if(img&&img.complete&&img.naturalWidth){
         c.save();c.globalAlpha=fi;
@@ -408,16 +426,16 @@ class Game{
       }
     }
 
-    // 7. 파티클, 플로팅 텍스트
-    this.particles.forEach(p=>p.draw(c));
-    this.floats.forEach(t=>t.draw(c));
-
-    // 8. 커서: 꼬깔콘 + 돌돌 말린 휴지
+    // 8. 뾰족 휴지 커서
     if(this.cursorVis){
       this.drawTissueCursor(c, this.cursorX, this.cursorY);
     }
 
-    // 9. 하단 잔디 장식
+    // 9. 파티클, 플로팅 텍스트
+    this.particles.forEach(p=>p.draw(c));
+    this.floats.forEach(t=>t.draw(c));
+
+    // 10. 하단 잔디 장식
     const grassY=DH*0.92;
     c.strokeStyle='#4A8C4C';c.lineWidth=2;
     for(let i=0;i<DW;i+=12){
@@ -427,7 +445,7 @@ class Game{
     c.fillStyle='#5D9E60';
     c.fillRect(0,grassY,DW,DH-grassY);
 
-    // 10. HUD
+    // 11. HUD (가장 위에 - 커서에 가려지지 않도록)
     if(this.state==='PLAYING'){
       // 상단 HUD 배경 (유리처럼)
       c.fillStyle='rgba(120,170,200,.45)';
