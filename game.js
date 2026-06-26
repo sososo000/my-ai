@@ -197,17 +197,17 @@ class Game{
     c.translate(cx, cy);
 
     // === 뾰족한 삼각형 휴지 커서 ===
-    // 콧구멍에 쏙 찌르는 뾰족 끝이 아래쪽
+    // 구멍에 쏙 찌르는 뾰족 끝이 위쪽 (게임: 위에서 아래로 누르므로)
     const W = 26;    // 너비
     const H = 34;    // 높이
 
     // 그림자
     c.fillStyle = 'rgba(0,0,0,.18)';
     c.beginPath();
-    c.ellipse(1, H/2+2, 8, 4, 0, 0, Math.PI*2);
+    c.ellipse(1, -H/2+10, 8, 4, 0, 0, Math.PI*2);
     c.fill();
 
-    // --- 전체: 뾰족 삼각형 (위 넓고 아래 뾰족) ---
+    // --- 전체: 뾰족 삼각형 (아래 넓고 위 뾰족) ---
     // 3D 그라데이션
     const g = c.createLinearGradient(-W/2, -H/2, W/2, H/2);
     g.addColorStop(0, '#FFFFFF');
@@ -215,12 +215,12 @@ class Game{
     g.addColorStop(1, '#D0D0D0');
     c.fillStyle = g;
 
-    // 둥근 모서리 삼각형 (위쪽만 약간 둥글게)
+    // 족 끝 위, 넓게 아래
     c.beginPath();
-    c.moveTo(-W/2+4, -H/2);
-    c.quadraticCurveTo(0, -H/2-4, W/2-4, -H/2);   // 위 근 모서리
+    c.moveTo(1, -H/2);               // 뾰족 끝 (위)
     c.lineTo(W/2-4, -H/2+8);
-    c.lineTo(1, H/2);    // 뾰족 끝
+    c.lineTo(W/2-4, H/2-2);
+    c.quadraticCurveTo(0, H/2+4, -W/2+4, H/2-2); // 아래 둥글게
     c.lineTo(-W/2+4, -H/2+8);
     c.closePath();
     c.fill();
@@ -353,6 +353,43 @@ class Game{
         c.drawImage(img,h.x-cs/2,h.y-cs*0.65,cs,cs*0.9);
         c.restore();
       }
+
+      // 콧물이 흘러내리는 비주얼 (ready 상태일 때)
+      if(h.state==='ready'&&!h.judged){
+        const ratio = h.timeLeft / h.totalTime;
+        // 콧물 시작점 (캐릭터 코 위치 - 캐릭터 중심에서 약간 위)
+        const snotStartX = h.x;
+        const snotStartY = h.y - cs*0.65 + 30;
+        // 콧물 끝 (시간이 지날수록 아래로 늘어남)
+        const snotLen = 30 + (1-ratio) * 80;
+        const snotEndY = snotStartY + snotLen;
+        // 흔들리는 효과
+        const wobble = Math.sin(this.time*8+h.idx)*3;
+        
+        // 물 흐름 (반투명 맑은 연두색)
+        c.strokeStyle = h.golden ? 'rgba(255,220,80,.85)' : 'rgba(100,200,100,.8)';
+        c.lineWidth = 5;
+        c.lineCap = 'round';
+        c.beginPath();
+        c.moveTo(snotStartX, snotStartY);
+        c.quadraticCurveTo(snotStartX+wobble, (snotStartY+snotEndY)/2, snotStartX+wobble*0.5, snotEndY);
+        c.stroke();
+        
+        // 콧물 끝 물방울
+        c.fillStyle = h.golden ? 'rgba(255,230,100,.9)' : 'rgba(120,220,120,.9)';
+        c.beginPath();
+        c.ellipse(snotStartX+wobble*0.5, snotEndY+4, 5, 7, 0, 0, Math.PI*2);
+        c.fill();
+        
+        // 콧물 하이라이트
+        c.strokeStyle = 'rgba(255,255,255,.6)';
+        c.lineWidth = 1.5;
+        c.beginPath();
+        c.moveTo(snotStartX-2, snotStartY+5);
+        c.lineTo(snotStartX-2+wobble*0.3, snotEndY-8);
+        c.stroke();
+      }
+
       // 타이머 링
       if(h.state==='ready'&&!h.judged){
         const ratio=h.timeLeft/h.totalTime;
@@ -367,7 +404,7 @@ class Game{
         c.font='bold 22px Jua,sans-serif';c.textAlign='center';
         c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=3;c.strokeText('TAP! 🧻',h.x,h.y-90);
         c.fillStyle=urgent?'#FF5252':'#FFEB3B';
-        c.fillText('TAP! 🧻',h.x,h.y-90);
+        c.fillText('TAP! ',h.x,h.y-90);
       }
     }
 
