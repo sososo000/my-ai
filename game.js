@@ -195,67 +195,73 @@ class Game{
   drawTissueCursor(c, cx, cy){
     c.save();
     c.translate(cx, cy);
-    // 살짝 기울여서 자연스러움
-    c.rotate(-0.15);
 
-    // === 돌돌 말린 휴지 모양 커서 ===
-    const tw = 22, th = 18;
+    // === 뾰족한 삼각형 휴지 커서 ===
+    // 콧구멍에 쏙 찌르는 뾰족 끝이 아래쪽
+    const W = 26;    // 너비
+    const H = 34;    // 높이
 
-    // 바닥 그림자
-    c.fillStyle = 'rgba(0,0,0,.15)';
+    // 그림자
+    c.fillStyle = 'rgba(0,0,0,.18)';
     c.beginPath();
-    c.ellipse(0, 4, tw/2+2, 5, 0, 0, Math.PI*2);
+    c.ellipse(1, H/2+2, 8, 4, 0, 0, Math.PI*2);
     c.fill();
 
-    // 돌돌 말린 휴지 본체 (두툼한 원통)
-    // 측면 (약간의 원통 형태)
-    c.fillStyle = '#E8E8E8';
+    // --- 전체: 뾰족 삼각형 (위 넓고 아래 뾰족) ---
+    // 3D 그라데이션
+    const g = c.createLinearGradient(-W/2, -H/2, W/2, H/2);
+    g.addColorStop(0, '#FFFFFF');
+    g.addColorStop(0.5, '#F0F0F0');
+    g.addColorStop(1, '#D0D0D0');
+    c.fillStyle = g;
+
+    // 둥근 모서리 삼각형 (위쪽만 약간 둥글게)
     c.beginPath();
-    c.ellipse(0, 4, tw/2, 6, 0, 0, Math.PI);
+    c.moveTo(-W/2+4, -H/2);
+    c.quadraticCurveTo(0, -H/2-4, W/2-4, -H/2);   // 위 근 모서리
+    c.lineTo(W/2-4, -H/2+8);
+    c.lineTo(1, H/2);    // 뾰족 끝
+    c.lineTo(-W/2+4, -H/2+8);
+    c.closePath();
     c.fill();
 
-    // 본체 (흰색 원)
-    const tGrad = c.createRadialGradient(-3,-3,2, 0,0,18);
-    tGrad.addColorStop(0, '#FFFFFF');
-    tGrad.addColorStop(0.5, '#F5F5F5');
-    tGrad.addColorStop(1, '#D8D8D8');
-    c.fillStyle = tGrad;
-    c.beginPath();
-    c.arc(0, 0, tw/2, 0, Math.PI*2);
-    c.fill();
     // 테두리
-    c.strokeStyle = '#B8B8B8';
-    c.lineWidth = 1.2;
+    c.strokeStyle = '#A8A8A8';
+    c.lineWidth = 1;
     c.stroke();
 
-    // 돌돌 말린 나선 패턴 (핵심!)
-    c.strokeStyle = 'rgba(150,150,150,.5)';
-    c.lineWidth = 1.3;
-    // 중심 나선
+    // --- 접힌 휴지 라인 (휴지 질감) ---
+    c.strokeStyle = 'rgba(160,160,160,.4)';
+    c.lineWidth = 0.8;
+    // 좌측 대각선
     c.beginPath();
-    c.arc(0, -1, 3, 0.2, Math.PI*1.8);
+    c.moveTo(-W/2+6, -H/2+4);
+    c.lineTo(-2, H/2-2);
     c.stroke();
-    // 바깥 나선
+    // 우측 대각선
     c.beginPath();
-    c.arc(-1, -1, 6, 0.5, Math.PI*1.6);
+    c.moveTo(W/2-6, -H/2+4);
+    c.lineTo(2, H/2-2);
     c.stroke();
+    // 가운데 세로 줄
     c.beginPath();
-    c.arc(1, -1, 9, 0.3, Math.PI*1.5);
+    c.moveTo(0, -H/2);
+    c.lineTo(0, H/2-4);
     c.stroke();
 
-    // 휴지 말린 가장자리 (두툼하게)
-    c.fillStyle = '#F0F0F0';
+    // --- 위쪽 가장자리 (두툼한 휴지 가장자리) ---
+    c.fillStyle = '#EAEAEA';
     c.strokeStyle = '#C0C0C0';
     c.lineWidth = 0.8;
     c.beginPath();
-    c.ellipse(0, -tw/2, 6, 4, 0, 0, Math.PI*2);
+    c.ellipse(0, -H/2, W/2-2, 4, 0, 0, Math.PI*2);
     c.fill();
     c.stroke();
 
-    // 반짝이 하이라이트
+    // --- 하이라이트 ---
     c.fillStyle = 'rgba(255,255,255,.85)';
     c.beginPath();
-    c.ellipse(-4, -5, 4, 2, -0.3, 0, Math.PI*2);
+    c.ellipse(-4, -H/2+2, 5, 2, -0.15, 0, Math.PI*2);
     c.fill();
 
     c.restore();
