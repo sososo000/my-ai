@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 똥싸기 마스터 2인용 💩</title>
+    <title>💩 똥싸기 마스터 2인용 💩</title>
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Dongle:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,105 +14,153 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffe1f3 0%, #b8f3ff 100%);
+            background: linear-gradient(135deg, #1a3a5c 0%, #2d5a87 50%, #1a3a5c 100%);
             padding: 20px;
         }
 
-        .game-container {
-            background: #fff;
-            border-radius: 32px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(43, 38, 68, 0.15);
-            text-align: center;
-            max-width: 820px;
+        .game-wrapper {
+            max-width: 900px;
             width: 100%;
+            background: linear-gradient(180deg, #1e4d7a 0%, #163d63 100%);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+            border: 3px solid #0d2b4a;
+        }
+
+        /* 헤더 */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
             position: relative;
+        }
+
+        .header-otter {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid;
             overflow: hidden;
-            border: 4px solid #ff7eb3;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .game-container::before {
-            content: '';
+        .header-otter.p1 { border-color: #ff7eb3; }
+        .header-otter.p2 { border-color: #7bffcb; }
+
+        .header-otter img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-center {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffe156;
+            text-shadow: 3px 3px 0 #c2a830, 0 0 20px rgba(255, 225, 86, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            background: linear-gradient(180deg, #4facfe 0%, #00d8c9 100%);
+            color: #fff;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: inline-block;
+            box-shadow: 0 3px 0 #0099a8;
+        }
+
+        .poop-emoji {
+            font-size: 2.5rem;
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #ff7eb3, #ff9a3c, #ffe156, #7bffcb, #78d6ff);
+            top: -10px;
         }
 
-        h1 {
-            font-size: 2.4rem;
-            margin-bottom: 6px;
-            color: #ff7eb3;
+        .poop-emoji.left { left: 100px; }
+        .poop-emoji.right { right: 100px; }
+
+        /* 점수판 */
+        .scoreboard {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .player-card {
+            flex: 1;
+            background: #fff;
+            border-radius: 16px;
+            padding: 15px 20px;
+            border: 3px solid;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .player-card.p1 { border-color: #ff7eb3; }
+        .player-card.p2 { border-color: #7bffcb; }
+
+        .player-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .player-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .p1 .player-dot { background: #ff7eb3; }
+        .p2 .player-dot { background: #7bffcb; }
+
+        .player-card-header h3 {
+            font-size: 1.1rem;
             font-weight: 800;
         }
 
-        .subtitle {
-            color: #2b2644;
-            margin-bottom: 18px;
-            font-size: 1.05rem;
-            opacity: 0.65;
-            font-weight: 600;
-        }
-
-        .players-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 12px 0;
-            gap: 12px;
-        }
-
-        .player-info {
-            flex: 1;
-            padding: 14px 18px;
-            border-radius: 16px;
-            border: 3px solid;
-            text-align: left;
-        }
-
-        .player-info.p1 {
-            background: linear-gradient(135deg, #fff0f5, #ffe0ec);
-            border-color: #ff7eb3;
-        }
-
-        .player-info.p2 {
-            background: linear-gradient(135deg, #f0fff5, #e0ffe8);
-            border-color: #7bffcb;
-        }
-
-        .player-info h3 {
-            margin-bottom: 10px;
-            font-size: 1.15rem;
-            text-align: center;
-        }
-
-        .player-info.p1 h3 { color: #ff7eb3; }
-        .player-info.p2 h3 { color: #5d8f66; }
-
-        .player-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            font-size: 0.95rem;
-            color: #2b2644;
-        }
+        .p1 .player-card-header h3 { color: #ff7eb3; }
+        .p2 .player-card-header h3 { color: #5d8f66; }
 
         .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
 
-        .stat-label { font-weight: 700; min-width: 45px; }
-        .stat-value { font-weight: 800; font-size: 1.05rem; }
+        .stat-label {
+            font-weight: 700;
+            color: #2b2644;
+        }
+
+        .stat-value {
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
         .p1 .stat-value { color: #ff7eb3; }
         .p2 .stat-value { color: #5d8f66; }
 
         .belly-bar {
-            width: 100px;
-            height: 14px;
+            width: 120px;
+            height: 12px;
             background: #f0f0f0;
-            border-radius: 7px;
+            border-radius: 6px;
             overflow: hidden;
             border: 2px solid #ddd;
         }
@@ -120,81 +168,208 @@
         .belly-fill {
             height: 100%;
             transition: width 0.3s;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
         .p1 .belly-fill { background: linear-gradient(90deg, #ff7eb3, #ff9a3c); }
         .p2 .belly-fill { background: linear-gradient(90deg, #7bffcb, #78d6ff); }
 
-        .timer-box {
-            background: linear-gradient(135deg, #fff9e0, #fff3c4);
-            padding: 12px 28px;
-            border-radius: 18px;
-            border: 4px solid #ffe156;
-            box-shadow: 0 5px 0 #e6c840;
-            min-width: 110px;
+        /* 타이머 - 선장 시계 */
+        .timer-container {
+            position: relative;
+            width: 110px;
+            height: 110px;
         }
 
-        .timer-box .label {
-            font-size: 0.85rem;
-            color: #2b2644;
-            opacity: 0.7;
-            margin-bottom: 4px;
+        .timer-outer {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #d4a373 0%, #a87c52 100%);
+            border-radius: 50%;
+            border: 6px solid #8b6f47;
+            box-shadow: 0 6px 0 #6b5434, 0 8px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        .timer-box .time {
-            font-size: 2.2rem;
+        .timer-outer::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 15px;
+            background: #8b6f47;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .timer-value {
+            font-size: 2.5rem;
             font-weight: 800;
             color: #2b2644;
+            line-height: 1;
         }
 
-        .game-wrapper {
-            position: relative;
-            display: inline-block;
-            margin: 12px 0;
+        .timer-unit {
+            font-size: 0.7rem;
+            color: #fff;
+            font-weight: 700;
         }
+
+        .timer-star {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            font-size: 1.5rem;
+        }
+
+        /* 게임 보드 */
+        .game-board-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .game-board-frame {
+            background: linear-gradient(135deg, #4facfe 0%, #00d8c9 100%);
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 0 6px 0 #0099a8, 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .game-board-frame::before,
+        .game-board-frame::after {
+            content: '🪢';
+            position: absolute;
+            font-size: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .game-board-frame::before { left: -10px; }
+        .game-board-frame::after { right: -10px; }
 
         #game-canvas {
-            border: 4px solid #ff7eb3;
-            border-radius: 20px;
             display: block;
-            margin: 0 auto;
-            box-shadow: 0 8px 0 rgba(255, 126, 179, 0.25);
+            width: 100%;
+            border-radius: 12px;
             background: #f5e6d3;
         }
 
-        .controls {
-            margin-top: 14px;
-            display: flex;
-            justify-content: space-around;
-            gap: 12px;
-        }
-
-        .control-box {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            border: 3px solid;
-        }
-
-        .control-box.p1 {
-            background: linear-gradient(135deg, #fff0f5, #ffe0ec);
-            border-color: #ff7eb3;
+        .combo-display {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #fff9e0, #fff3c4);
+            border: 3px solid #ffe156;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: #ff7eb3;
+            box-shadow: 0 3px 0 #e6c840;
+            display: none;
         }
 
-        .control-box.p2 {
-            background: linear-gradient(135deg, #f0fff5, #e0ffe8);
-            border-color: #7bffcb;
-            color: #5d8f66;
+        .combo-display.show { display: block; }
+
+        /* 조작법 */
+        .controls {
+            display: flex;
+            gap: 15px;
         }
 
-        .control-box h4 { margin-bottom: 6px; font-size: 1.05rem; }
-        .control-box p { font-size: 0.85rem; line-height: 1.6; color: #2b2644; opacity: 0.8; }
+        .control-card {
+            flex: 1;
+            background: #fff;
+            border-radius: 16px;
+            padding: 15px 20px;
+            border: 3px solid;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .control-card.p1 { border-color: #ff7eb3; }
+        .control-card.p2 { border-color: #7bffcb; }
+
+        .control-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .control-card-header h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+        .p1 .control-card-header h4 { color: #ff7eb3; }
+        .p2 .control-card-header h4 { color: #5d8f66; }
+
+        .control-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .key-icons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        .key-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #2b2644;
+            box-shadow: 0 2px 0 #ccc;
+        }
+
+        .p1 .key-icon { border-color: #ff7eb3; }
+        .p2 .key-icon { border-color: #7bffcb; }
+
+        .control-text {
+            font-size: 0.9rem;
+            color: #2b2644;
+            line-height: 1.6;
+        }
+
+        .control-text strong {
+            font-weight: 800;
+        }
+
+        /* 시작 버튼 */
+        .start-btn-container {
+            text-align: center;
+            margin-top: 15px;
+        }
 
         #start-btn, #restart-btn {
-            margin-top: 16px;
             padding: 14px 44px;
             font-size: 1.2rem;
             font-family: 'Jua', sans-serif;
@@ -210,46 +385,47 @@
 
         #start-btn:hover, #restart-btn:hover { transform: scale(1.05); }
 
+        /* 게임 오버 오버레이 */
         #game-over {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(43, 38, 68, 0.92);
+            background: rgba(43, 38, 68, 0.95);
             color: white;
-            border-radius: 16px;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
         }
 
         #game-over.show { display: flex; }
-        #game-over h2 { font-size: 2rem; margin-bottom: 10px; font-family: 'Jua', sans-serif; }
+        #game-over h2 { font-size: 2.5rem; margin-bottom: 15px; font-family: 'Jua', sans-serif; }
 
         .result-box {
             display: flex;
             gap: 30px;
-            margin: 15px 0;
+            margin: 20px 0;
         }
 
         .player-result {
             text-align: center;
-            padding: 15px 25px;
-            border-radius: 15px;
-            border: 3px solid;
+            padding: 20px 30px;
+            border-radius: 20px;
+            border: 4px solid;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .player-result.p1 { border-color: #ff7eb3; background: rgba(255, 126, 179, 0.2); }
-        .player-result.p2 { border-color: #7bffcb; background: rgba(123, 255, 203, 0.2); }
-        .player-result .rank { font-size: 2.2rem; margin: 8px 0; }
-        .player-result .score { font-size: 1.4rem; font-weight: 800; }
+        .player-result.p1 { border-color: #ff7eb3; }
+        .player-result.p2 { border-color: #7bffcb; }
+        .player-result .rank { font-size: 2.5rem; margin: 10px 0; }
+        .player-result .score { font-size: 1.6rem; font-weight: 800; }
 
         .winner-announce {
-            font-size: 1.7rem;
-            margin: 12px 0;
-            padding: 10px 28px;
+            font-size: 2rem;
+            margin: 15px 0;
+            padding: 12px 32px;
             background: rgba(255, 225, 86, 0.3);
-            border-radius: 10px;
+            border-radius: 12px;
             font-family: 'Jua', sans-serif;
         }
 
@@ -259,90 +435,158 @@
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>💩 싸기 마스터 2인용 💩</h1>
-        <p class="subtitle">둘이서 변기 쟁탈! 누가 더 많이 싸나?</p>
+    <div class="game-wrapper">
+        <!-- 헤더 -->
+        <div class="header">
+            <div class="header-otter p1">
+                <img src="/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png" alt="Player 1">
+            </div>
+            <div class="header-center">
+                <span class="poop-emoji left">💩</span>
+                <h1 class="header-title">똥싸기 마스터 2인용</h1>
+                <span class="poop-emoji right">💩</span>
+                <div class="header-subtitle">둘이서 변기 쟁탈! 누가 더 많이 싸나?</div>
+            </div>
+            <div class="header-otter p2">
+                <img src="/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png" alt="Player 2">
+            </div>
+        </div>
 
-        <div class="players-status">
-            <div class="player-info p1">
-                <h3>🔴 Player 1</h3>
-                <div class="player-stats">
-                    <div class="stat-row">
-                        <span class="stat-label">점수:</span>
-                        <span class="stat-value" id="p1-score">0</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">배:</span>
-                        <div class="belly-bar"><div class="belly-fill" id="p1-belly"></div></div>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">콤보:</span>
-                        <span class="stat-value" id="p1-combo">0</span>
-                    </div>
+        <!-- 점수판 -->
+        <div class="scoreboard">
+            <div class="player-card p1">
+                <div class="player-card-header">
+                    <div class="player-dot"></div>
+                    <h3>Player 1</h3>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">점수:</span>
+                    <span class="stat-value" id="p1-score">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">배:</span>
+                    <div class="belly-bar"><div class="belly-fill" id="p1-belly"></div></div>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">콤보:</span>
+                    <span class="stat-value" id="p1-combo">0</span>
                 </div>
             </div>
 
-            <div class="timer-box">
-                <div class="label">남은 시간</div>
-                <div class="time" id="timer">60</div>
+            <div class="timer-container">
+                <div class="timer-outer">
+                    <div class="timer-label">남은 시간</div>
+                    <div class="timer-value" id="timer">60</div>
+                    <div class="timer-unit">초</div>
+                </div>
+                <div class="timer-star">⭐</div>
             </div>
 
-            <div class="player-info p2">
-                <h3>🔵 Player 2</h3>
-                <div class="player-stats">
-                    <div class="stat-row">
-                        <span class="stat-label">점수:</span>
-                        <span class="stat-value" id="p2-score">0</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">배:</span>
-                        <div class="belly-bar"><div class="belly-fill" id="p2-belly"></div></div>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">콤보:</span>
-                        <span class="stat-value" id="p2-combo">0</span>
-                    </div>
+            <div class="player-card p2">
+                <div class="player-card-header">
+                    <div class="player-dot"></div>
+                    <h3>Player 2</h3>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">점수:</span>
+                    <span class="stat-value" id="p2-score">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">배:</span>
+                    <div class="belly-bar"><div class="belly-fill" id="p2-belly"></div></div>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">콤보:</span>
+                    <span class="stat-value" id="p2-combo">0</span>
                 </div>
             </div>
         </div>
 
-        <div class="game-wrapper">
-            <canvas id="game-canvas" width="700" height="440"></canvas>
-            <div id="game-over">
-                <h2>🚽 게임 종료! 🚽</h2>
-                <div class="winner-announce" id="winner-text"></div>
-                <div class="result-box">
-                    <div class="player-result p1">
-                        <div style="font-size:1.1rem;">🔴 Player 1</div>
-                        <div class="rank" id="p1-rank"></div>
-                        <div class="score"><span id="p1-final-score">0</span>점</div>
-                        <div style="font-size:0.85rem;">성공률: <span id="p1-accuracy">0</span>%</div>
-                        <div style="font-size:0.85rem;">최대콤보: <span id="p1-max-combo">0</span></div>
-                    </div>
-                    <div class="player-result p2">
-                        <div style="font-size:1.1rem;">🔵 Player 2</div>
-                        <div class="rank" id="p2-rank"></div>
-                        <div class="score"><span id="p2-final-score">0</span>점</div>
-                        <div style="font-size:0.85rem;">성공률: <span id="p2-accuracy">0</span>%</div>
-                        <div style="font-size:0.85rem;">최대콤보: <span id="p2-max-combo">0</span></div>
-                    </div>
-                </div>
-                <button id="restart-btn">다시 싸기! 🔄</button>
+        <!-- 게임 보드 -->
+        <div class="game-board-container">
+            <div class="game-board-frame">
+                <canvas id="game-canvas" width="860" height="480"></canvas>
+            </div>
+            <div class="combo-display" id="combo-display">
+                <span id="combo-value">2</span>x 🔥
             </div>
         </div>
 
+        <!-- 조작법 -->
         <div class="controls">
-            <div class="control-box p1">
-                <h4>🔴 Player 1</h4>
-                <p>↑←↓→ 이동<br>Space = 똥싸기</p>
+            <div class="control-card p1">
+                <div class="control-card-header">
+                    <div class="player-dot"></div>
+                    <h4>Player 1</h4>
+                </div>
+                <div class="control-content">
+                    <div class="key-icons">
+                        <div class="key-row">
+                            <div class="key-icon">↑</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key-icon">←</div>
+                            <div class="key-icon">↓</div>
+                            <div class="key-icon">→</div>
+                        </div>
+                    </div>
+                    <div class="control-text">
+                        <strong>↑←↓→ 이동</strong><br>
+                        <strong>Space = 똥싸기</strong>
+                    </div>
+                </div>
             </div>
-            <div class="control-box p2">
-                <h4>🔵 Player 2</h4>
-                <p>WASD 이동<br>좌측 Shift = 똥싸기</p>
+
+            <div class="control-card p2">
+                <div class="control-card-header">
+                    <div class="player-dot"></div>
+                    <h4>Player 2</h4>
+                </div>
+                <div class="control-content">
+                    <div class="key-icons">
+                        <div class="key-row">
+                            <div class="key-icon">W</div>
+                        </div>
+                        <div class="key-row">
+                            <div class="key-icon">A</div>
+                            <div class="key-icon">S</div>
+                            <div class="key-icon">D</div>
+                        </div>
+                    </div>
+                    <div class="control-text">
+                        <strong>WASD 이동</strong><br>
+                        <strong>좌측 Shift = 똥싸기</strong>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <button id="start-btn">게임 시작! 🎮</button>
+        <div class="start-btn-container">
+            <button id="start-btn">게임 시작! 🎮</button>
+        </div>
+    </div>
+
+    <!-- 게임 오버 -->
+    <div id="game-over">
+        <h2>🚽 게임 종료! 🚽</h2>
+        <div class="winner-announce" id="winner-text"></div>
+        <div class="result-box">
+            <div class="player-result p1">
+                <div style="font-size:1.2rem; margin-bottom:8px;">🔴 Player 1</div>
+                <div class="rank" id="p1-rank"></div>
+                <div class="score"><span id="p1-final-score">0</span>점</div>
+                <div style="font-size:0.9rem; margin-top:8px;">성공률: <span id="p1-accuracy">0</span>%</div>
+                <div style="font-size:0.9rem;">최대콤보: <span id="p1-max-combo">0</span></div>
+            </div>
+            <div class="player-result p2">
+                <div style="font-size:1.2rem; margin-bottom:8px;">🔵 Player 2</div>
+                <div class="rank" id="p2-rank"></div>
+                <div class="score"><span id="p2-final-score">0</span>점</div>
+                <div style="font-size:0.9rem; margin-top:8px;">성공률: <span id="p2-accuracy">0</span>%</div>
+                <div style="font-size:0.9rem;">최대콤보: <span id="p2-max-combo">0</span></div>
+            </div>
+        </div>
+        <button id="restart-btn">다시 싸기! 🔄</button>
     </div>
 
     <script>
@@ -351,6 +595,8 @@
         const startBtn = document.getElementById('start-btn');
         const restartBtn = document.getElementById('restart-btn');
         const gameOverDiv = document.getElementById('game-over');
+        const comboDisplay = document.getElementById('combo-display');
+        const comboValue = document.getElementById('combo-value');
 
         // 수달 캐릭터 이미지 로드
         const otterImg = new Image();
@@ -386,8 +632,8 @@
         function initGame() {
             game = { running: false, timeLeft: 60, lastTime: 0 };
             players = [
-                { id: 1, x: canvas.width * 0.3, y: canvas.height / 2, speed: 3.5, color: '#ff7eb3', score: 0, belly: 0, combo: 0, maxCombo: 0, totalPoops: 0, toiletPoops: 0, isPooping: false, poopTimer: 0, direction: 1, poopCooldown: 0 },
-                { id: 2, x: canvas.width * 0.7, y: canvas.height / 2, speed: 3.5, color: '#7bffcb', score: 0, belly: 0, combo: 0, maxCombo: 0, totalPoops: 0, toiletPoops: 0, isPooping: false, poopTimer: 0, direction: -1, poopCooldown: 0 }
+                { id: 1, x: canvas.width * 0.35, y: canvas.height / 2, speed: 3.5, color: '#ff7eb3', score: 0, belly: 0, combo: 0, maxCombo: 0, totalPoops: 0, toiletPoops: 0, isPooping: false, poopTimer: 0, direction: 1, poopCooldown: 0 },
+                { id: 2, x: canvas.width * 0.65, y: canvas.height / 2, speed: 3.5, color: '#7bffcb', score: 0, belly: 0, combo: 0, maxCombo: 0, totalPoops: 0, toiletPoops: 0, isPooping: false, poopTimer: 0, direction: -1, poopCooldown: 0 }
             ];
             toilets = []; foods = []; particles = []; floatingTexts = []; keys = {};
         }
@@ -408,8 +654,8 @@
             initGame();
             game.running = true;
             game.lastTime = Date.now();
-            for (let i = 0; i < 5; i++) spawnToilet();
-            for (let i = 0; i < 3; i++) spawnFood();
+            for (let i = 0; i < 6; i++) spawnToilet();
+            for (let i = 0; i < 4; i++) spawnFood();
             startBtn.style.display = 'none';
             gameOverDiv.classList.remove('show');
             updateUI();
@@ -417,12 +663,12 @@
         }
 
         function spawnToilet() {
-            toilets.push({ x: 80 + Math.random() * (canvas.width - 160), y: 60 + Math.random() * (canvas.height - 140), width: 50, height: 60 });
+            toilets.push({ x: 100 + Math.random() * (canvas.width - 200), y: 80 + Math.random() * (canvas.height - 160), width: 50, height: 60 });
         }
 
         function spawnFood() {
-            const foodTypes = ['🍔', '', '🌮', '🍩', '🍪', '🍦', '', '🍗'];
-            foods.push({ x: 50 + Math.random() * (canvas.width - 100), y: 50 + Math.random() * (canvas.height - 120), width: 30, height: 30, type: foodTypes[Math.floor(Math.random() * foodTypes.length)] });
+            const foodTypes = ['🍦', '🍔', '🍕', '🌮', '🍩', '🍪', ''];
+            foods.push({ x: 80 + Math.random() * (canvas.width - 160), y: 80 + Math.random() * (canvas.height - 160), width: 30, height: 30, type: foodTypes[Math.floor(Math.random() * foodTypes.length)] });
         }
 
         function tryPoop(playerIdx) {
@@ -465,20 +711,19 @@
 
         function updatePlayer(playerIdx) {
             const p = players[playerIdx];
-            let moving = false;
             if (playerIdx === 0) {
-                if (keys['ArrowLeft']) { p.x -= p.speed; p.direction = -1; moving = true; }
-                if (keys['ArrowRight']) { p.x += p.speed; p.direction = 1; moving = true; }
-                if (keys['ArrowUp']) { p.y -= p.speed; moving = true; }
-                if (keys['ArrowDown']) { p.y += p.speed; moving = true; }
+                if (keys['ArrowLeft']) { p.x -= p.speed; p.direction = -1; }
+                if (keys['ArrowRight']) { p.x += p.speed; p.direction = 1; }
+                if (keys['ArrowUp']) { p.y -= p.speed; }
+                if (keys['ArrowDown']) { p.y += p.speed; }
             } else {
-                if (keys['KeyA']) { p.x -= p.speed; p.direction = -1; moving = true; }
-                if (keys['KeyD']) { p.x += p.speed; p.direction = 1; moving = true; }
-                if (keys['KeyW']) { p.y -= p.speed; moving = true; }
-                if (keys['KeyS']) { p.y += p.speed; moving = true; }
+                if (keys['KeyA']) { p.x -= p.speed; p.direction = -1; }
+                if (keys['KeyD']) { p.x += p.speed; p.direction = 1; }
+                if (keys['KeyW']) { p.y -= p.speed; }
+                if (keys['KeyS']) { p.y += p.speed; }
             }
-            p.x = Math.max(25, Math.min(canvas.width - 25, p.x));
-            p.y = Math.max(35, Math.min(canvas.height - 25, p.y));
+            p.x = Math.max(30, Math.min(canvas.width - 30, p.x));
+            p.y = Math.max(40, Math.min(canvas.height - 30, p.y));
             if (p.isPooping) { p.poopTimer--; if (p.poopTimer <= 0) p.isPooping = false; }
             if (p.poopCooldown > 0) p.poopCooldown--;
             for (let i = foods.length - 1; i >= 0; i--) {
@@ -513,6 +758,15 @@
             ui.p1.combo.textContent = players[0].combo > 1 ? players[0].combo + 'x' : players[0].combo;
             ui.p2.combo.textContent = players[1].combo > 1 ? players[1].combo + 'x' : players[1].combo;
             ui.timer.textContent = Math.ceil(game.timeLeft);
+
+            // 콤보 표시
+            const maxCombo = Math.max(players[0].combo, players[1].combo);
+            if (maxCombo > 1) {
+                comboValue.textContent = maxCombo;
+                comboDisplay.classList.add('show');
+            } else {
+                comboDisplay.classList.remove('show');
+            }
         }
 
         function drawOtter(x, y, size, direction, color, isPooping) {
@@ -528,10 +782,17 @@
             ctx.fill();
             ctx.globalAlpha = 1;
 
+            // 컬러 원형 배경
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.3;
+            ctx.beginPath();
+            ctx.arc(0, 0, size * 0.55, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
             if (otterLoaded) {
-                ctx.drawImage(otterImg, -size * 0.5, -size * 0.5, size, size);
+                ctx.drawImage(otterImg, -size * 0.45, -size * 0.45, size * 0.9, size * 0.9);
             } else {
-                // 폴백: 수달 모양 그리기
                 ctx.fillStyle = '#c8956c';
                 ctx.beginPath();
                 ctx.ellipse(0, 0, size * 0.35, size * 0.4, 0, 0, Math.PI * 2);
@@ -540,31 +801,21 @@
                 ctx.beginPath();
                 ctx.ellipse(0, size * 0.1, size * 0.22, size * 0.25, 0, 0, Math.PI * 2);
                 ctx.fill();
-                // 눈
                 ctx.fillStyle = '#2b2644';
                 ctx.beginPath();
                 ctx.arc(-size * 0.1, -size * 0.1, size * 0.04, 0, Math.PI * 2);
                 ctx.arc(size * 0.1, -size * 0.1, size * 0.04, 0, Math.PI * 2);
                 ctx.fill();
-                // 코
                 ctx.fillStyle = '#ff7eb3';
                 ctx.beginPath();
                 ctx.arc(0, size * 0.02, size * 0.05, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            // 플레이어 컬러 링
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.arc(0, 0, size * 0.48, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // 똥싸는 이펙트
             if (isPooping) {
                 ctx.font = `${size * 0.5}px Arial`;
                 ctx.textAlign = 'center';
-                ctx.fillText('', size * 0.5, size * 0.3);
+                ctx.fillText('💩', size * 0.5, size * 0.3);
             }
 
             ctx.restore();
@@ -584,6 +835,16 @@
             for (let y = 0; y < canvas.height; y += 40) {
                 ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
             }
+
+            // 발자국 패턴
+            ctx.globalAlpha = 0.1;
+            ctx.font = '24px Arial';
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 5; j++) {
+                    ctx.fillText('🐾', 60 + i * 110, 60 + j * 100);
+                }
+            }
+            ctx.globalAlpha = 1;
 
             // 변기
             ctx.font = '44px Arial';
@@ -630,25 +891,10 @@
                 ctx.strokeText(`P${p.id}`, p.x, p.y - 35);
                 ctx.fillText(`P${p.id}`, p.x, p.y - 35);
 
-                // 배가 가득할 때 이모지
                 if (p.belly > 50) {
                     ctx.font = '16px Arial';
                     ctx.fillText(p.belly > 80 ? '🤢' : '😣', p.x, p.y - 22);
                 }
-            }
-
-            // 콤보 표시
-            if (players[0].combo > 1) {
-                ctx.fillStyle = '#ff7eb3';
-                ctx.font = 'bold 22px Jua, sans-serif';
-                ctx.textAlign = 'left';
-                ctx.fillText(`${players[0].combo}x 🔥`, 12, canvas.height - 15);
-            }
-            if (players[1].combo > 1) {
-                ctx.fillStyle = '#7bffcb';
-                ctx.font = 'bold 22px Jua, sans-serif';
-                ctx.textAlign = 'right';
-                ctx.fillText(`🔥 ${players[1].combo}x`, canvas.width - 12, canvas.height - 15);
             }
         }
 
@@ -660,11 +906,11 @@
         }
 
         function getRank(score) {
-            if (score >= 400) return ' 똥마왕';
-            if (score >= 250) return '💎 VIP';
+            if (score >= 400) return '👑 똥마왕';
+            if (score >= 250) return ' VIP';
             if (score >= 120) return '🥇 똥고수';
             if (score >= 50) return '🥈 보통';
-            return '🥉 초보';
+            return ' 초보';
         }
 
         function endGame() {
@@ -680,13 +926,12 @@
             ui.p2.rank.textContent = getRank(p2.score);
 
             if (p1.score > p2.score) { ui.winnerText.textContent = '🔴 Player 1 승리! 🏆'; ui.winnerText.className = 'winner-announce p1-win'; }
-            else if (p2.score > p1.score) { ui.winnerText.textContent = ' Player 2 승리! 🏆'; ui.winnerText.className = 'winner-announce p2-win'; }
-            else { ui.winnerText.textContent = ' 무승부!'; ui.winnerText.className = 'winner-announce tie-text'; }
+            else if (p2.score > p1.score) { ui.winnerText.textContent = '🔵 Player 2 승리! 🏆'; ui.winnerText.className = 'winner-announce p2-win'; }
+            else { ui.winnerText.textContent = '🤝 무승부!'; ui.winnerText.className = 'winner-announce tie-text'; }
 
             gameOverDiv.classList.add('show');
         }
 
-        // 초기 화면
         function drawInitial() {
             ctx.fillStyle = '#f5e6d3';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -698,7 +943,7 @@
             ctx.fillStyle = '#ff7eb3';
             ctx.font = 'bold 30px Jua, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('💩 똥싸기 마스터 2인용 ', canvas.width / 2, canvas.height / 2 - 20);
+            ctx.fillText('💩 싸기 마스터 2인용 💩', canvas.width / 2, canvas.height / 2 - 20);
             ctx.fillStyle = '#2b2644';
             ctx.font = '18px Jua, sans-serif';
             ctx.fillText('시작 버튼을 눌러주세요!', canvas.width / 2, canvas.height / 2 + 20);
