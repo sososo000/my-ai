@@ -1088,6 +1088,20 @@ canvas {
   background: linear-gradient(135deg, #f0fff0, #e8f5e9);
 }
 
+/* 똥싸기 마스터 - 브라운 */
+.menu-poop {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border-left-color: #8B4513;
+}
+
+.menu-poop:hover {
+  background: linear-gradient(135deg, #fff8f0, #fff3e0);
+}
+
+.menu-icon-poop {
+  background: linear-gradient(135deg, #8B4513, #D2691E);
+}
+
 /* 메뉴 아이콘 - 자연 컬러 */
 .menu-icon {
   width: 58px;

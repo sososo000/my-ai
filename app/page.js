@@ -96,6 +96,17 @@ export default function HomePage() {
                 </div>
                 <div className="menu-item-arrow">›</div>
               </Link>
+
+              <Link href="/poop-game.html" className="menu-item menu-poop" target="_blank">
+                <div className="menu-icon menu-icon-poop">
+                  <span style={{ fontSize: '32px' }}>💩</span>
+                </div>
+                <div className="menu-item-info">
+                  <span className="menu-item-name">똥싸기 마스터</span>
+                  <span className="menu-item-desc">2인용 로컬 배틀!</span>
+                </div>
+                <div className="menu-item-arrow">›</div>
+              </Link>
             </div>
           </div>
 
