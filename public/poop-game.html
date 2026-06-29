@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Dongle:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Jua', 'Dongle', sans-serif;
             display: flex;
@@ -17,7 +16,6 @@
             background: linear-gradient(135deg, #1a3a5c 0%, #2d5a87 50%, #1a3a5c 100%);
             padding: 20px;
         }
-
         .game-wrapper {
             max-width: 900px;
             width: 100%;
@@ -26,9 +24,29 @@
             padding: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.1);
             border: 3px solid #0d2b4a;
+            position: relative;
         }
-
-        /* 헤더 */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: linear-gradient(180deg, #7bffcb, #2fd38f);
+            color: #2b2644;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #17a869, 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .home-btn:hover { transform: scale(1.1); }
         .header {
             display: flex;
             align-items: center;
@@ -36,7 +54,6 @@
             margin-bottom: 15px;
             position: relative;
         }
-
         .header-otter {
             width: 90px;
             height: 90px;
@@ -46,22 +63,10 @@
             background: #fff;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
         .header-otter.p1 { border-color: #ff7eb3; }
         .header-otter.p2 { border-color: #7bffcb; }
-
-        .header-otter img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-center {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
+        .header-otter img { width: 100%; height: 100%; object-fit: cover; }
+        .header-center { flex: 1; text-align: center; position: relative; }
         .header-title {
             font-size: 2.2rem;
             font-weight: 800;
@@ -69,7 +74,6 @@
             text-shadow: 3px 3px 0 #c2a830, 0 0 20px rgba(255, 225, 86, 0.5);
             margin-bottom: 8px;
         }
-
         .header-subtitle {
             background: linear-gradient(180deg, #4facfe 0%, #00d8c9 100%);
             color: #fff;
@@ -80,17 +84,9 @@
             display: inline-block;
             box-shadow: 0 3px 0 #0099a8;
         }
-
-        .poop-emoji {
-            font-size: 2.5rem;
-            position: absolute;
-            top: -10px;
-        }
-
+        .poop-emoji { font-size: 2.5rem; position: absolute; top: -10px; }
         .poop-emoji.left { left: 100px; }
         .poop-emoji.right { right: 100px; }
-
-        /* 점수판 */
         .scoreboard {
             display: flex;
             align-items: center;
@@ -98,7 +94,6 @@
             gap: 15px;
             margin-bottom: 15px;
         }
-
         .player-card {
             flex: 1;
             background: #fff;
@@ -107,83 +102,27 @@
             border: 3px solid;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
         }
-
         .player-card.p1 { border-color: #ff7eb3; }
         .player-card.p2 { border-color: #7bffcb; }
-
-        .player-card-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .player-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-        }
-
+        .player-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .player-dot { width: 16px; height: 16px; border-radius: 50%; }
         .p1 .player-dot { background: #ff7eb3; }
         .p2 .player-dot { background: #7bffcb; }
-
-        .player-card-header h3 {
-            font-size: 1.1rem;
-            font-weight: 800;
-        }
-
+        .player-card-header h3 { font-size: 1.1rem; font-weight: 800; }
         .p1 .player-card-header h3 { color: #ff7eb3; }
         .p2 .player-card-header h3 { color: #5d8f66; }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .stat-label {
-            font-weight: 700;
-            color: #2b2644;
-        }
-
-        .stat-value {
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-
+        .stat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.95rem; }
+        .stat-label { font-weight: 700; color: #2b2644; }
+        .stat-value { font-weight: 800; font-size: 1.1rem; }
         .p1 .stat-value { color: #ff7eb3; }
         .p2 .stat-value { color: #5d8f66; }
-
-        .belly-bar {
-            width: 120px;
-            height: 12px;
-            background: #f0f0f0;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 2px solid #ddd;
-        }
-
-        .belly-fill {
-            height: 100%;
-            transition: width 0.3s;
-            border-radius: 4px;
-        }
-
+        .belly-bar { width: 120px; height: 12px; background: #f0f0f0; border-radius: 6px; overflow: hidden; border: 2px solid #ddd; }
+        .belly-fill { height: 100%; transition: width 0.3s; border-radius: 4px; }
         .p1 .belly-fill { background: linear-gradient(90deg, #ff7eb3, #ff9a3c); }
         .p2 .belly-fill { background: linear-gradient(90deg, #7bffcb, #78d6ff); }
-
-        /* 타이머 - 선장 시계 */
-        .timer-container {
-            position: relative;
-            width: 110px;
-            height: 110px;
-        }
-
+        .timer-container { position: relative; width: 110px; height: 110px; }
         .timer-outer {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background: linear-gradient(135deg, #d4a373 0%, #a87c52 100%);
             border-radius: 50%;
             border: 6px solid #8b6f47;
@@ -194,52 +133,20 @@
             justify-content: center;
             position: relative;
         }
-
         .timer-outer::before {
             content: '';
             position: absolute;
-            top: -15px;
-            left: 50%;
+            top: -15px; left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 15px;
+            width: 20px; height: 15px;
             background: #8b6f47;
             border-radius: 4px 4px 0 0;
         }
-
-        .timer-label {
-            font-size: 0.75rem;
-            color: #fff;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .timer-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #2b2644;
-            line-height: 1;
-        }
-
-        .timer-unit {
-            font-size: 0.7rem;
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .timer-star {
-            position: absolute;
-            bottom: -5px;
-            right: -5px;
-            font-size: 1.5rem;
-        }
-
-        /* 게임 보드 */
-        .game-board-container {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
+        .timer-label { font-size: 0.75rem; color: #fff; font-weight: 700; margin-bottom: 2px; }
+        .timer-value { font-size: 2.5rem; font-weight: 800; color: #2b2644; line-height: 1; }
+        .timer-unit { font-size: 0.7rem; color: #fff; font-weight: 700; }
+        .timer-star { position: absolute; bottom: -5px; right: -5px; font-size: 1.5rem; }
+        .game-board-container { position: relative; margin-bottom: 15px; }
         .game-board-frame {
             background: linear-gradient(135deg, #4facfe 0%, #00d8c9 100%);
             border-radius: 20px;
@@ -247,30 +154,19 @@
             box-shadow: 0 6px 0 #0099a8, 0 8px 20px rgba(0, 0, 0, 0.3);
             position: relative;
         }
-
-        .game-board-frame::before,
-        .game-board-frame::after {
+        .game-board-frame::before, .game-board-frame::after {
             content: '🪢';
             position: absolute;
             font-size: 1.5rem;
             top: 50%;
             transform: translateY(-50%);
         }
-
         .game-board-frame::before { left: -10px; }
         .game-board-frame::after { right: -10px; }
-
-        #game-canvas {
-            display: block;
-            width: 100%;
-            border-radius: 12px;
-            background: #f5e6d3;
-        }
-
+        #game-canvas { display: block; width: 100%; border-radius: 12px; background: #f5e6d3; }
         .combo-display {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
+            bottom: 20px; left: 20px;
             background: linear-gradient(135deg, #fff9e0, #fff3c4);
             border: 3px solid #ffe156;
             border-radius: 12px;
@@ -281,15 +177,8 @@
             box-shadow: 0 3px 0 #e6c840;
             display: none;
         }
-
         .combo-display.show { display: block; }
-
-        /* 조작법 */
-        .controls {
-            display: flex;
-            gap: 15px;
-        }
-
+        .controls { display: flex; gap: 15px; }
         .control-card {
             flex: 1;
             background: #fff;
@@ -298,46 +187,17 @@
             border: 3px solid;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
         }
-
         .control-card.p1 { border-color: #ff7eb3; }
         .control-card.p2 { border-color: #7bffcb; }
-
-        .control-card-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .control-card-header h4 {
-            font-size: 1.05rem;
-            font-weight: 800;
-        }
-
+        .control-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .control-card-header h4 { font-size: 1.05rem; font-weight: 800; }
         .p1 .control-card-header h4 { color: #ff7eb3; }
         .p2 .control-card-header h4 { color: #5d8f66; }
-
-        .control-content {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .key-icons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .key-row {
-            display: flex;
-            gap: 4px;
-        }
-
+        .control-content { display: flex; align-items: center; gap: 15px; }
+        .key-icons { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .key-row { display: flex; gap: 4px; }
         .key-icon {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
             border: 2px solid #ddd;
             border-radius: 6px;
@@ -349,26 +209,11 @@
             color: #2b2644;
             box-shadow: 0 2px 0 #ccc;
         }
-
         .p1 .key-icon { border-color: #ff7eb3; }
         .p2 .key-icon { border-color: #7bffcb; }
-
-        .control-text {
-            font-size: 0.9rem;
-            color: #2b2644;
-            line-height: 1.6;
-        }
-
-        .control-text strong {
-            font-weight: 800;
-        }
-
-        /* 시작 버튼 */
-        .start-btn-container {
-            text-align: center;
-            margin-top: 15px;
-        }
-
+        .control-text { font-size: 0.9rem; color: #2b2644; line-height: 1.6; }
+        .control-text strong { font-weight: 800; }
+        .start-btn-container { text-align: center; margin-top: 15px; }
         #start-btn, #restart-btn {
             padding: 14px 44px;
             font-size: 1.2rem;
@@ -382,10 +227,7 @@
             font-weight: 800;
             box-shadow: 0 5px 0 #17a869, 0 6px 14px rgba(47, 211, 143, 0.35);
         }
-
         #start-btn:hover, #restart-btn:hover { transform: scale(1.05); }
-
-        /* 게임 오버 오버레이 */
         #game-over {
             display: none;
             position: fixed;
@@ -397,38 +239,15 @@
             align-items: center;
             z-index: 1000;
         }
-
         #game-over.show { display: flex; }
         #game-over h2 { font-size: 2.5rem; margin-bottom: 15px; font-family: 'Jua', sans-serif; }
-
-        .result-box {
-            display: flex;
-            gap: 30px;
-            margin: 20px 0;
-        }
-
-        .player-result {
-            text-align: center;
-            padding: 20px 30px;
-            border-radius: 20px;
-            border: 4px solid;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
+        .result-box { display: flex; gap: 30px; margin: 20px 0; }
+        .player-result { text-align: center; padding: 20px 30px; border-radius: 20px; border: 4px solid; background: rgba(255, 255, 255, 0.1); }
         .player-result.p1 { border-color: #ff7eb3; }
         .player-result.p2 { border-color: #7bffcb; }
         .player-result .rank { font-size: 2.5rem; margin: 10px 0; }
         .player-result .score { font-size: 1.6rem; font-weight: 800; }
-
-        .winner-announce {
-            font-size: 2rem;
-            margin: 15px 0;
-            padding: 12px 32px;
-            background: rgba(255, 225, 86, 0.3);
-            border-radius: 12px;
-            font-family: 'Jua', sans-serif;
-        }
-
+        .winner-announce { font-size: 2rem; margin: 15px 0; padding: 12px 32px; background: rgba(255, 225, 86, 0.3); border-radius: 12px; font-family: 'Jua', sans-serif; }
         .tie-text { color: #ffe156; }
         .p1-win { color: #ff7eb3; }
         .p2-win { color: #7bffcb; }
@@ -436,14 +255,14 @@
 </head>
 <body>
     <div class="game-wrapper">
-        <!-- 헤더 -->
+        <a href="/" class="home-btn" title="홈으로">🏠</a>
         <div class="header">
             <div class="header-otter p1">
                 <img src="/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png" alt="Player 1">
             </div>
             <div class="header-center">
                 <span class="poop-emoji left">💩</span>
-                <h1 class="header-title">똥싸기 마스터 2인용</h1>
+                <h1 class="header-title">싸기 마스터 2인용</h1>
                 <span class="poop-emoji right">💩</span>
                 <div class="header-subtitle">둘이서 변기 쟁탈! 누가 더 많이 싸나?</div>
             </div>
@@ -451,8 +270,6 @@
                 <img src="/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png" alt="Player 2">
             </div>
         </div>
-
-        <!-- 점수판 -->
         <div class="scoreboard">
             <div class="player-card p1">
                 <div class="player-card-header">
@@ -472,7 +289,6 @@
                     <span class="stat-value" id="p1-combo">0</span>
                 </div>
             </div>
-
             <div class="timer-container">
                 <div class="timer-outer">
                     <div class="timer-label">남은 시간</div>
@@ -481,7 +297,6 @@
                 </div>
                 <div class="timer-star">⭐</div>
             </div>
-
             <div class="player-card p2">
                 <div class="player-card-header">
                     <div class="player-dot"></div>
@@ -501,8 +316,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 게임 보드 -->
         <div class="game-board-container">
             <div class="game-board-frame">
                 <canvas id="game-canvas" width="860" height="480"></canvas>
@@ -511,8 +324,6 @@
                 <span id="combo-value">2</span>x 🔥
             </div>
         </div>
-
-        <!-- 조작법 -->
         <div class="controls">
             <div class="control-card p1">
                 <div class="control-card-header">
@@ -521,9 +332,7 @@
                 </div>
                 <div class="control-content">
                     <div class="key-icons">
-                        <div class="key-row">
-                            <div class="key-icon">↑</div>
-                        </div>
+                        <div class="key-row"><div class="key-icon">↑</div></div>
                         <div class="key-row">
                             <div class="key-icon">←</div>
                             <div class="key-icon">↓</div>
@@ -536,7 +345,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="control-card p2">
                 <div class="control-card-header">
                     <div class="player-dot"></div>
@@ -544,9 +352,7 @@
                 </div>
                 <div class="control-content">
                     <div class="key-icons">
-                        <div class="key-row">
-                            <div class="key-icon">W</div>
-                        </div>
+                        <div class="key-row"><div class="key-icon">W</div></div>
                         <div class="key-row">
                             <div class="key-icon">A</div>
                             <div class="key-icon">S</div>
@@ -560,13 +366,10 @@
                 </div>
             </div>
         </div>
-
         <div class="start-btn-container">
             <button id="start-btn">게임 시작! 🎮</button>
         </div>
     </div>
-
-    <!-- 게임 오버 -->
     <div id="game-over">
         <h2>🚽 게임 종료! 🚽</h2>
         <div class="winner-announce" id="winner-text"></div>
@@ -586,9 +389,8 @@
                 <div style="font-size:0.9rem;">최대콤보: <span id="p2-max-combo">0</span></div>
             </div>
         </div>
-        <button id="restart-btn">다시 싸기! 🔄</button>
+        <button id="restart-btn">다시 싸기! </button>
     </div>
-
     <script>
         const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
@@ -598,11 +400,21 @@
         const comboDisplay = document.getElementById('combo-display');
         const comboValue = document.getElementById('combo-value');
 
-        // 수달 캐릭터 이미지 로드
         const otterImg = new Image();
         otterImg.src = '/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png';
         let otterLoaded = false;
         otterImg.onload = () => { otterLoaded = true; };
+
+        // 음식 이미지 로드
+        const foodImages = {};
+        const foodNames = ['sushi', 'skewer', 'jelly', 'dessert-bowl', 'mussels', 'fish-cake', 'shaved-ice', 'bear-dessert', 'ice-bowl', 'pizza', 'bento', 'crab-bowl'];
+        let foodsLoaded = 0;
+        foodNames.forEach(name => {
+            const img = new Image();
+            img.src = `/assets/foods/${name}.png`;
+            img.onload = () => { foodsLoaded++; };
+            foodImages[name] = img;
+        });
 
         const ui = {
             p1: {
@@ -667,8 +479,8 @@
         }
 
         function spawnFood() {
-            const foodTypes = ['🍦', '🍔', '🍕', '🌮', '🍩', '🍪', ''];
-            foods.push({ x: 80 + Math.random() * (canvas.width - 160), y: 80 + Math.random() * (canvas.height - 160), width: 30, height: 30, type: foodTypes[Math.floor(Math.random() * foodTypes.length)] });
+            const foodTypes = Object.keys(foodImages);
+            foods.push({ x: 80 + Math.random() * (canvas.width - 160), y: 80 + Math.random() * (canvas.height - 160), width: 40, height: 40, type: foodTypes[Math.floor(Math.random() * foodTypes.length)] });
         }
 
         function tryPoop(playerIdx) {
@@ -706,8 +518,7 @@
         }
 
         function addFloatingText(x, y, text, color) { floatingTexts.push({ x, y, text, color, life: 60 }); }
-
-        function checkCollision(a, b) { return Math.abs(a.x - b.x) < 30 && Math.abs(a.y - b.y) < 30; }
+        function checkCollision(a, b) { return Math.abs(a.x - b.x) < 35 && Math.abs(a.y - b.y) < 35; }
 
         function updatePlayer(playerIdx) {
             const p = players[playerIdx];
@@ -730,7 +541,6 @@
                 if (checkCollision(p, foods[i])) {
                     p.belly = Math.min(100, p.belly + 20);
                     addFloatingText(foods[i].x, foods[i].y - 20, '🍴+', p.color);
-                    for (let j = 0; j < 4; j++) particles.push({ x: foods[i].x, y: foods[i].y, vx: (Math.random() - 0.5) * 5, vy: (Math.random() - 0.5) * 5, life: 30, emoji: foods[i].type });
                     foods.splice(i, 1);
                     setTimeout(() => spawnFood(), 1500);
                 }
@@ -758,38 +568,27 @@
             ui.p1.combo.textContent = players[0].combo > 1 ? players[0].combo + 'x' : players[0].combo;
             ui.p2.combo.textContent = players[1].combo > 1 ? players[1].combo + 'x' : players[1].combo;
             ui.timer.textContent = Math.ceil(game.timeLeft);
-
-            // 콤보 표시
             const maxCombo = Math.max(players[0].combo, players[1].combo);
-            if (maxCombo > 1) {
-                comboValue.textContent = maxCombo;
-                comboDisplay.classList.add('show');
-            } else {
-                comboDisplay.classList.remove('show');
-            }
+            if (maxCombo > 1) { comboValue.textContent = maxCombo; comboDisplay.classList.add('show'); }
+            else { comboDisplay.classList.remove('show'); }
         }
 
         function drawOtter(x, y, size, direction, color, isPooping) {
             ctx.save();
             ctx.translate(x, y);
             ctx.scale(direction, 1);
-
-            // 그림자
             ctx.globalAlpha = 0.2;
             ctx.fillStyle = '#000';
             ctx.beginPath();
             ctx.ellipse(0, size * 0.45, size * 0.35, size * 0.1, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.globalAlpha = 1;
-
-            // 컬러 원형 배경
             ctx.fillStyle = color;
             ctx.globalAlpha = 0.3;
             ctx.beginPath();
             ctx.arc(0, 0, size * 0.55, 0, Math.PI * 2);
             ctx.fill();
             ctx.globalAlpha = 1;
-
             if (otterLoaded) {
                 ctx.drawImage(otterImg, -size * 0.45, -size * 0.45, size * 0.9, size * 0.9);
             } else {
@@ -811,64 +610,168 @@
                 ctx.arc(0, size * 0.02, size * 0.05, 0, Math.PI * 2);
                 ctx.fill();
             }
-
             if (isPooping) {
                 ctx.font = `${size * 0.5}px Arial`;
                 ctx.textAlign = 'center';
                 ctx.fillText('💩', size * 0.5, size * 0.3);
             }
-
             ctx.restore();
         }
 
+        // 귀여운 음식 그리기 함수들
+        function drawSushi(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(0, 4, s*0.5, s*0.28, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d5016'; ctx.fillRect(-s*0.12, -s*0.08, s*0.24, s*0.45);
+            ctx.fillStyle = '#ff7f50'; ctx.beginPath(); ctx.ellipse(0, -s*0.12, s*0.42, s*0.22, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#4facfe'; ctx.beginPath(); ctx.ellipse(0, -s*0.28, s*0.14, s*0.09, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(-s*0.04, -s*0.3, s*0.03, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        function drawSkewer(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.strokeStyle = '#d4a373'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-s*0.25, s*0.3); ctx.lineTo(s*0.25, -s*0.3); ctx.stroke();
+            const colors = ['#ff7f50','#2d5016','#ffd700','#ff6347'];
+            for (let i = 0; i < 4; i++) { ctx.fillStyle = colors[i]; ctx.beginPath(); ctx.arc(-s*0.18+i*s*0.12, s*0.22-i*s*0.12, s*0.1, 0, Math.PI*2); ctx.fill(); }
+            ctx.fillStyle = '#4facfe'; ctx.fillRect(s*0.12, -s*0.42, s*0.18, s*0.14);
+            ctx.fillStyle = '#fff'; ctx.font = `${s*0.12}px Arial`; ctx.textAlign = 'center'; ctx.fillText('🐟', s*0.21, -s*0.32);
+            ctx.restore();
+        }
+        function drawJelly(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#d4a373'; ctx.beginPath(); ctx.ellipse(0, s*0.28, s*0.42, s*0.1, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.moveTo(-s*0.22, s*0.18); ctx.quadraticCurveTo(-s*0.28, -s*0.08, 0, -s*0.32); ctx.quadraticCurveTo(s*0.28, -s*0.08, s*0.22, s*0.18); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(-s*0.08, -s*0.12, s*0.05, 0, Math.PI*2); ctx.fill();
+            ctx.strokeStyle = '#d4a373'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(s*0.08, -s*0.28); ctx.lineTo(s*0.18, -s*0.45); ctx.moveTo(s*0.12, -s*0.28); ctx.lineTo(s*0.22, -s*0.45); ctx.stroke();
+            ctx.restore();
+        }
+        function drawDessertBowl(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.ellipse(0, s*0.15, s*0.4, s*0.2, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(0, s*0.05, s*0.35, s*0.15, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.moveTo(-s*0.15, 0); ctx.quadraticCurveTo(-s*0.2, -s*0.2, 0, -s*0.35); ctx.quadraticCurveTo(s*0.2, -s*0.2, s*0.15, 0); ctx.fill();
+            ctx.fillStyle = '#ffd700'; ctx.font = `${s*0.2}px Arial`; ctx.textAlign = 'center'; ctx.fillText('⭐', s*0.15, -s*0.25);
+            ctx.restore();
+        }
+        function drawMussels(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#d4a373'; ctx.beginPath(); ctx.ellipse(0, s*0.1, s*0.4, s*0.25, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d3436'; 
+            for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.ellipse(-s*0.15+i*s*0.15, 0, s*0.12, s*0.08, 0.3, 0, Math.PI*2); ctx.fill(); }
+            ctx.fillStyle = '#ff7f50'; ctx.beginPath(); ctx.arc(s*0.1, -s*0.05, s*0.06, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.arc(s*0.25, s*0.2, s*0.08, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        function drawFishCake(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#d4a373'; ctx.beginPath(); ctx.ellipse(0, s*0.2, s*0.35, s*0.1, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#f0c060'; ctx.beginPath(); ctx.ellipse(0, 0, s*0.3, s*0.2, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d3436'; ctx.beginPath(); ctx.arc(-s*0.1, -s*0.05, s*0.04, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(-s*0.11, -s*0.06, s*0.015, 0, Math.PI*2); ctx.fill();
+            ctx.strokeStyle = '#d4a373'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(s*0.15, -s*0.15); ctx.lineTo(s*0.25, -s*0.35); ctx.stroke();
+            ctx.fillStyle = '#2d5016'; ctx.beginPath(); ctx.arc(s*0.25, s*0.1, s*0.08, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        function drawShavedIce(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.ellipse(0, s*0.15, s*0.38, s*0.18, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(0, s*0.05, s*0.32, s*0.12, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#c0392b'; for (let i = 0; i < 5; i++) { ctx.beginPath(); ctx.arc(-s*0.2+i*s*0.1, s*0.1, s*0.04, 0, Math.PI*2); ctx.fill(); }
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.moveTo(-s*0.12, 0); ctx.quadraticCurveTo(-s*0.15, -s*0.2, 0, -s*0.32); ctx.quadraticCurveTo(s*0.15, -s*0.2, s*0.12, 0); ctx.fill();
+            ctx.fillStyle = '#ffd700'; ctx.font = `${s*0.18}px Arial`; ctx.textAlign = 'center'; ctx.fillText('⭐', s*0.12, -s*0.22);
+            ctx.restore();
+        }
+        function drawBearDessert(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.ellipse(0, s*0.15, s*0.38, s*0.18, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(0, s*0.05, s*0.32, s*0.12, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#f0c060'; ctx.beginPath(); ctx.arc(0, -s*0.1, s*0.2, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#f0c060'; ctx.beginPath(); ctx.arc(-s*0.15, -s*0.25, s*0.08, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.15, -s*0.25, s*0.08, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d3436'; ctx.beginPath(); ctx.arc(-s*0.06, -s*0.12, s*0.025, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.06, -s*0.12, s*0.025, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ff7eb3'; ctx.beginPath(); ctx.arc(0, -s*0.06, s*0.03, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.moveTo(-s*0.08, -s*0.02); ctx.quadraticCurveTo(-s*0.1, -s*0.15, 0, -s*0.22); ctx.quadraticCurveTo(s*0.1, -s*0.15, s*0.08, -s*0.02); ctx.fill();
+            ctx.restore();
+        }
+        function drawIceBowl(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.ellipse(0, s*0.15, s*0.38, s*0.18, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(0, s*0.05, s*0.32, s*0.12, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#78d6ff'; ctx.beginPath(); ctx.moveTo(-s*0.1, 0); ctx.quadraticCurveTo(-s*0.12, -s*0.18, 0, -s*0.28); ctx.quadraticCurveTo(s*0.12, -s*0.18, s*0.1, 0); ctx.fill();
+            ctx.fillStyle = '#4facfe'; ctx.beginPath(); ctx.arc(-s*0.15, s*0.05, s*0.06, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.15, s*0.05, s*0.06, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        function drawPizza(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#d4a373'; ctx.beginPath(); ctx.ellipse(0, s*0.15, s*0.4, s*0.12, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#f0c060'; ctx.beginPath(); ctx.ellipse(0, s*0.05, s*0.38, s*0.1, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ff6347'; ctx.beginPath(); ctx.arc(-s*0.1, 0, s*0.06, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.12, -s*0.02, s*0.05, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(0, -s*0.02, s*0.08, s*0.05, 0.3, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d5016'; ctx.beginPath(); ctx.arc(s*0.05, s*0.05, s*0.04, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        function drawBento(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#4facfe'; ctx.beginPath(); ctx.roundRect(-s*0.35, -s*0.1, s*0.7, s*0.35, s*0.08); ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(0, -s*0.05, s*0.18, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d3436'; ctx.beginPath(); ctx.arc(-s*0.06, -s*0.08, s*0.025, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.06, -s*0.08, s*0.025, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ff7eb3'; ctx.beginPath(); ctx.arc(0, -s*0.02, s*0.03, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ff7f50'; ctx.beginPath(); ctx.arc(-s*0.2, s*0.1, s*0.06, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d5016'; ctx.beginPath(); ctx.arc(s*0.05, s*0.12, s*0.05, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.arc(s*0.2, s*0.1, s*0.05, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#4facfe'; ctx.beginPath(); ctx.arc(-s*0.25, s*0.2, s*0.06, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.25, s*0.2, s*0.06, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+        function drawCrabBowl(x, y, s) {
+            ctx.save(); ctx.translate(x, y);
+            ctx.fillStyle = '#ff6347'; ctx.beginPath(); ctx.ellipse(0, s*0.15, s*0.35, s*0.18, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ffd700'; ctx.beginPath(); ctx.ellipse(0, s*0.08, s*0.3, s*0.12, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#f0c060'; ctx.beginPath(); ctx.arc(0, -s*0.05, s*0.18, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#f0c060'; ctx.beginPath(); ctx.arc(-s*0.14, -s*0.18, s*0.07, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.14, -s*0.18, s*0.07, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#2d3436'; ctx.beginPath(); ctx.arc(-s*0.05, -s*0.07, s*0.025, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.05, -s*0.07, s*0.025, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#ff6347'; ctx.beginPath(); ctx.arc(-s*0.25, s*0.05, s*0.08, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(s*0.25, s*0.05, s*0.08, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+        }
+
+        const foodDrawFuncs = {
+            'sushi': drawSushi, 'skewer': drawSkewer, 'jelly': drawJelly, 'dessert-bowl': drawDessertBowl,
+            'mussels': drawMussels, 'fish-cake': drawFishCake, 'shaved-ice': drawShavedIce, 'bear-dessert': drawBearDessert,
+            'ice-bowl': drawIceBowl, 'pizza': drawPizza, 'bento': drawBento, 'crab-bowl': drawCrabBowl
+        };
+
+        function drawFood(food) {
+            const drawFn = foodDrawFuncs[food.type];
+            if (drawFn) {
+                drawFn(food.x, food.y, food.width);
+            } else {
+                ctx.font = '28px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('🍽️', food.x, food.y);
+            }
+        }
+
         function draw() {
-            // 배경 - 베이지 타일
             ctx.fillStyle = '#f5e6d3';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // 타일 패턴
             ctx.strokeStyle = '#e8d5c0';
             ctx.lineWidth = 1;
-            for (let x = 0; x < canvas.width; x += 40) {
-                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-            }
-            for (let y = 0; y < canvas.height; y += 40) {
-                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-            }
-
-            // 발자국 패턴
+            for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+            for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
             ctx.globalAlpha = 0.1;
             ctx.font = '24px Arial';
-            for (let i = 0; i < 8; i++) {
-                for (let j = 0; j < 5; j++) {
-                    ctx.fillText('🐾', 60 + i * 110, 60 + j * 100);
-                }
-            }
+            for (let i = 0; i < 8; i++) { for (let j = 0; j < 5; j++) { ctx.fillText('', 60 + i * 110, 60 + j * 100); } }
             ctx.globalAlpha = 1;
-
-            // 변기
             ctx.font = '44px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            for (let toilet of toilets) {
-                ctx.fillText('🚽', toilet.x, toilet.y);
-            }
-
-            // 음식
-            ctx.font = '28px Arial';
-            for (let food of foods) {
-                ctx.fillText(food.type, food.x, food.y);
-            }
-
-            // 파티클
+            for (let toilet of toilets) { ctx.fillText('🚽', toilet.x, toilet.y); }
+            for (let food of foods) { drawFood(food); }
             for (let p of particles) {
                 ctx.globalAlpha = Math.min(1, p.life / 30);
                 ctx.font = '20px Arial';
                 ctx.fillText(p.emoji, p.x, p.y);
             }
             ctx.globalAlpha = 1;
-
-            // 플로팅 텍스트
             for (let ft of floatingTexts) {
                 ctx.globalAlpha = ft.life / 60;
                 ctx.fillStyle = ft.color;
@@ -877,12 +780,8 @@
                 ctx.fillText(ft.text, ft.x, ft.y);
             }
             ctx.globalAlpha = 1;
-
-            // 플레이어 (수달)
             for (let p of players) {
                 drawOtter(p.x, p.y, 50, p.direction, p.color, p.isPooping);
-
-                // P1/P2 라벨
                 ctx.font = 'bold 14px Jua, sans-serif';
                 ctx.fillStyle = p.color;
                 ctx.strokeStyle = '#fff';
@@ -890,27 +789,18 @@
                 ctx.textAlign = 'center';
                 ctx.strokeText(`P${p.id}`, p.x, p.y - 35);
                 ctx.fillText(`P${p.id}`, p.x, p.y - 35);
-
-                if (p.belly > 50) {
-                    ctx.font = '16px Arial';
-                    ctx.fillText(p.belly > 80 ? '🤢' : '😣', p.x, p.y - 22);
-                }
+                if (p.belly > 50) { ctx.font = '16px Arial'; ctx.fillText(p.belly > 80 ? '🤢' : '😣', p.x, p.y - 22); }
             }
         }
 
-        function gameLoop() {
-            if (!game.running) return;
-            update();
-            draw();
-            requestAnimationFrame(gameLoop);
-        }
+        function gameLoop() { if (!game.running) return; update(); draw(); requestAnimationFrame(gameLoop); }
 
         function getRank(score) {
             if (score >= 400) return '👑 똥마왕';
-            if (score >= 250) return ' VIP';
-            if (score >= 120) return '🥇 똥고수';
+            if (score >= 250) return '💎 VIP';
+            if (score >= 120) return '🥇 고수';
             if (score >= 50) return '🥈 보통';
-            return ' 초보';
+            return '🥉 초보';
         }
 
         function endGame() {
@@ -924,11 +814,9 @@
             ui.p2.maxCombo.textContent = p2.maxCombo;
             ui.p1.rank.textContent = getRank(p1.score);
             ui.p2.rank.textContent = getRank(p2.score);
-
             if (p1.score > p2.score) { ui.winnerText.textContent = '🔴 Player 1 승리! 🏆'; ui.winnerText.className = 'winner-announce p1-win'; }
-            else if (p2.score > p1.score) { ui.winnerText.textContent = '🔵 Player 2 승리! 🏆'; ui.winnerText.className = 'winner-announce p2-win'; }
-            else { ui.winnerText.textContent = '🤝 무승부!'; ui.winnerText.className = 'winner-announce tie-text'; }
-
+            else if (p2.score > p1.score) { ui.winnerText.textContent = ' Player 2 승리! 🏆'; ui.winnerText.className = 'winner-announce p2-win'; }
+            else { ui.winnerText.textContent = ' 무승부!'; ui.winnerText.className = 'winner-announce tie-text'; }
             gameOverDiv.classList.add('show');
         }
 
@@ -939,11 +827,10 @@
             ctx.lineWidth = 1;
             for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
             for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
-
             ctx.fillStyle = '#ff7eb3';
             ctx.font = 'bold 30px Jua, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('💩 싸기 마스터 2인용 💩', canvas.width / 2, canvas.height / 2 - 20);
+            ctx.fillText('💩 똥싸기 마스터 2인용 💩', canvas.width / 2, canvas.height / 2 - 20);
             ctx.fillStyle = '#2b2644';
             ctx.font = '18px Jua, sans-serif';
             ctx.fillText('시작 버튼을 눌러주세요!', canvas.width / 2, canvas.height / 2 + 20);
