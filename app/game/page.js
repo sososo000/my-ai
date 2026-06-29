@@ -41,54 +41,6 @@ export default function GamePage() {
     <div id="wrapper">
       <GameBodyMode />
 
-      {/* 탭 네비게이션 */}
-      <div style={{
-        position: 'fixed',
-        top: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 100,
-        display: 'flex',
-        gap: '10px',
-        background: 'rgba(255,255,255,0.9)',
-        padding: '8px',
-        borderRadius: '20px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
-      }}>
-        <button
-          onClick={() => setActiveTab('tissue')}
-          style={{
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '15px',
-            background: activeTab === 'tissue' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
-            color: activeTab === 'tissue' ? 'white' : '#666',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '14px',
-            transition: 'all 0.3s'
-          }}
-        >
-          🧻 휴지 슛!
-        </button>
-        <button
-          onClick={() => setActiveTab('poop')}
-          style={{
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '15px',
-            background: activeTab === 'poop' ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' : 'transparent',
-            color: activeTab === 'poop' ? 'white' : '#666',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            fontSize: '14px',
-            transition: 'all 0.3s'
-          }}
-        >
-          💩 싸기 마스터
-        </button>
-      </div>
-
       {/* 휴지 슛! 게임 */}
       {activeTab === 'tissue' && (
         <>

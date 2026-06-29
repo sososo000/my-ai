@@ -99,7 +99,11 @@ export default function HomePage() {
 
               <Link href="/poop-game.html" className="menu-item menu-poop" target="_blank">
                 <div className="menu-icon menu-icon-poop">
-                  <span style={{ fontSize: '32px' }}>💩</span>
+                  <img
+                    src="/assets/characters/tissue-otter/frames/cropped/10-combo-happy-bounce.png"
+                    alt="싸기 마스터"
+                    className="menu-icon-img"
+                  />
                 </div>
                 <div className="menu-item-info">
                   <span className="menu-item-name">똥싸기 마스터</span>
