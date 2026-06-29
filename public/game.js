@@ -597,23 +597,88 @@ function initGame(canvasEl){
   const showBoard=()=>{
     $('turnOverlay').classList.add('hidden');
     const list=$('boardList');list.innerHTML='';
-    // 최종 순위 = localStorage에 누적된 전체 기록 (최대 10명)
     const records=loadRecords().slice(0,10);
     if(records.length===0){
       list.innerHTML='<div style="color:#BFB8D6;text-align:center;padding:20px">아직 기록이 없어요!</div>';
+      $('adContinueRow').style.display='none';
     }else{
-      const medals=['🥇','🥈',''];
+      const medals=['🥇','',''];
       records.forEach((r,i)=>{
         const d=document.createElement('div');
         d.className='board-row rank-'+(i+1);
         const rankLabel = i<3 ? medals[i] : (i+1)+'등';
-        const comboText = r.bestCombo>0 ? ' · 🔥 x'+r.bestCombo : '';
         d.innerHTML='<span class="board-rank">'+rankLabel+'</span><span class="board-name">'+r.name+'</span><span class="board-score">⭐ '+r.bestScore+'</span>';
         list.appendChild(d);
       });
+      $('adContinueRow').style.display='flex';
     }
     $('boardOverlay').classList.remove('hidden');
   };
+
+  // ===== 광고 시청 로직 =====
+  const AD_DURATION=15;
+  const AD_VIDEO_IDS=['dQw4w9WgXcQ','jNQXAC9IVRw','yPYZpwSpKmA'];
+  let adWatching=false;
+  let adInterval=null;
+
+  const getAdUrl=()=>{
+    const id=AD_VIDEO_IDS[Math.floor(Math.random()*AD_VIDEO_IDS.length)];
+    return'https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0';
+  };
+
+  const gameResumeFromAd=()=>{
+    game.hp=MAX_HP;
+    game.combo=0;
+    game.state='PLAYING';
+    game.spawnTimer=0;
+    game.goldenTimer=0;
+    game.particles=[];
+    game.floats=[];
+    game.holes.forEach(h=>h.reset());
+    $('boardOverlay').classList.add('hidden');
+    $('adContinueRow').style.display='none';
+    $('adWatchBtn').textContent='📺 광고보고 계속하기';
+    $('adWatchBtn').disabled=false;
+  };
+
+  const endAd=()=>{
+    clearInterval(adInterval);
+    adInterval=null;
+    adWatching=false;
+    $('adOverlay').classList.add('hidden');
+    $('adCloseBtn').style.display='none';
+    $('adTimer').textContent='';
+    gameResumeFromAd();
+  };
+
+  $('adWatchBtn').addEventListener('click',()=>{
+    if(adWatching)return;
+    adWatching=true;
+    $('adWatchBtn').disabled=true;
+    $('adWatchBtn').textContent=' 광고 시청 중...';
+    $('adOverlay').classList.remove('hidden');
+    $('adCloseBtn').style.display='none';
+    $('adCloseBtn').disabled=true;
+    $('adVideoIframe').src=getAdUrl();
+    let cd=AD_DURATION;
+    $('adTimer').textContent='광고 시청 중... '+cd+'초';
+    adInterval=setInterval(()=>{
+      cd--;
+      if(cd<=0){
+        clearInterval(adInterval);adInterval=null;
+        $('adTimer').textContent='✅ 광고 시청 완료!';
+        $('adCloseBtn').style.display='block';
+        $('adCloseBtn').disabled=false;
+        $('adWatchBtn').disabled=false;
+        $('adWatchBtn').textContent=' 광고보고 계속하기';
+        setTimeout(()=>{if(adWatching)endAd()},3000);
+      }else{
+        $('adTimer').textContent='광고 시청 중... '+cd+'초';
+      }
+    },1000);
+  });
+
+  $('adCloseBtn').addEventListener('click',()=>{if(adWatching)endAd()});
 
   const origOnMiss=game.onMiss.bind(game);
   game.onMiss=function(h){
