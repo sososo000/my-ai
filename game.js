@@ -645,15 +645,7 @@ function initGame(canvasEl){
   game.ld.load(()=>{game.start()});
 }
 
-// Next.js에서 window.initTissueGame로 호출 가능하게 노출
+// Next.js 환경: window에만 노출 (자동 실행 금지)
 if(typeof window!=='undefined'){
   window.initTissueGame=initGame;
-}
-
-// standalone HTML에서도 자동 실행
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',()=>initGame());
-}else{
-  var existingCanvas=document.getElementById('gameCanvas');
-  if(existingCanvas)initGame();
 }

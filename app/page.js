@@ -3,23 +3,30 @@ import Link from 'next/link';
 export default function HomePage() {
   return (
     <main className="home-page">
+      {/* 방 배경 이미지 */}
+      <img
+        src="/assets/bg/otter-room.png"
+        alt=""
+        aria-hidden="true"
+        className="home-bg-img"
+      />
       {/* 배경 파티클 */}
       <div className="home-bg-deco" aria-hidden="true" />
 
       <div className="home-container">
         {/* 좌측: 타이틀 + 캐릭터 */}
         <div className="home-left">
-          {/* 장식 별 */}
+          {/* 떠다니는 장식 */}
           <div className="deco-stars" aria-hidden="true">
-            <span className="deco-star deco-star-1">⭐</span>
+            <span className="deco-star deco-star-1"></span>
             <span className="deco-star deco-star-2">✨</span>
-            <span className="deco-star deco-star-3"></span>
-            <span className="deco-star deco-star-4">⭐</span>
+            <span className="deco-star deco-star-3">🍃</span>
+            <span className="deco-star deco-star-4"></span>
           </div>
 
           {/* 타이틀 뱃지 */}
           <div className="title-badge">
-            <span className="title-badge-emoji"></span>
+            <span className="title-badge-emoji">🧻</span>
             <h1 className="home-title">휴지 슛!</h1>
             <span className="title-badge-emoji">💦</span>
           </div>
@@ -44,10 +51,10 @@ export default function HomePage() {
                 alt="휴지 수달 캐릭터"
               />
             </div>
-            {/* 물방울/휴지 장식 */}
+            {/* 소품 장식 */}
             <div className="stage-deco stage-deco-1"></div>
-            <div className="stage-deco stage-deco-2"></div>
-            <div className="stage-deco stage-deco-3">💦</div>
+            <div className="stage-deco stage-deco-2">🍃</div>
+            <div className="stage-deco stage-deco-3"></div>
           </div>
         </div>
 
@@ -55,7 +62,7 @@ export default function HomePage() {
         <div className="home-right">
           <div className="menu-panel">
             <div className="menu-panel-header">
-              <span className="menu-panel-emoji"></span>
+              <span className="menu-panel-emoji">🎯</span>
               <span className="menu-panel-label">무엇을 할까요?</span>
             </div>
 
@@ -69,7 +76,7 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="menu-item-info">
-                  <span className="menu-item-name">콧물쏙 게임</span>
+                  <span className="menu-item-name">콧물 게임</span>
                   <span className="menu-item-desc">타이밍 리듬 액션!</span>
                 </div>
                 <div className="menu-item-arrow">›</div>

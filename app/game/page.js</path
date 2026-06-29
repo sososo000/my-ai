@@ -31,7 +31,6 @@ export default function GamePage() {
 
     return () => {
       clearInterval(retryRef.current);
-      initedRef.current = false;
     };
   }, []);
 
@@ -39,10 +38,7 @@ export default function GamePage() {
     <div id="wrapper">
       <GameBodyMode />
 
-      <canvas
-        id="gameCanvas"
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
-      />
+      <canvas id="gameCanvas" style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }} />
 
       <Script
         src="/game.js"
@@ -50,29 +46,11 @@ export default function GamePage() {
         onReady={tryInit}
       />
 
-      <Link
-        className="chat-link"
-        href="/"
-        aria-label="메인으로 돌아가기"
-        style={{ position: 'fixed', zIndex: 100 }}
-      >
+      <Link className="chat-link" href="/" aria-label="메인으로 돌아가기" style={{ zIndex: 100 }}>
         🏠 메인으로
       </Link>
 
-      <div
-        id="lobby"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 10,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <div id="lobby" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10 }}>
         <div className="lobby-box">
           <div className="lobby-header">
             <span className="lobby-emoji">🧻</span>
@@ -92,7 +70,7 @@ export default function GamePage() {
               id="nameInput"
               type="text"
               maxLength={10}
-              placeholder="플레이어 네임 입력!"
+              placeholder="플레이어 닉네임 입력!"
               inputMode="text"
               autoComplete="off"
             />
@@ -106,7 +84,7 @@ export default function GamePage() {
             </button>
           </div>
 
-          <div className="hint">✨ 1명부터 플레이 가능 · 8명</div>
+          <div className="hint">✨ 1명부터 플레이 가능 · 한글/영어 입력 가능 · 최대 8명</div>
         </div>
       </div>
 
@@ -129,7 +107,7 @@ export default function GamePage() {
           <div className="board-title">🏆 최종 순위 🏆</div>
           <div id="boardList" />
           <button id="boardAgainBtn" className="action-btn">
-             다시하기
+            🔄 다시하기
           </button>
         </div>
       </div>

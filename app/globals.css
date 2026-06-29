@@ -701,6 +701,17 @@ canvas {
   }
 }
 
+/* ========== 메인 :root - 수달 방 톤 ========== */
+:root {
+  --wood: #a87c52;
+  --wood-dark: #6b4424;
+  --wood-light: #d4a373;
+  --cream: #fef9ef;
+  --sage: #8fb996;
+  --sage-dark: #5d8f66;
+  --lemon: #f6d860;
+}
+
 /* ========== 메인 홈 페이지 ========== */
 .home-page {
   min-height: 100vh;
@@ -708,29 +719,33 @@ canvas {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: linear-gradient(160deg, #fff0f7 0%, #e8f8ff 50%, #f0fff8 100%);
   position: relative;
   overflow: hidden;
   font-family: 'Jua', sans-serif;
+}
+
+.home-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .home-bg-deco {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(circle at 8% 22%, rgba(255, 221, 243, .8) 0 8px, transparent 9px),
-    radial-gradient(circle at 78% 30%, rgba(120, 214, 255, .5) 0 6px, transparent 7px),
-    radial-gradient(circle at 60% 78%, rgba(123, 255, 203, .6) 0 7px, transparent 8px),
-    radial-gradient(circle at 22% 72%, rgba(255, 225, 86, .6) 0 5px, transparent 6px),
-    radial-gradient(circle at 88% 88%, rgba(255, 126, 179, .5) 0 6px, transparent 7px),
-    radial-gradient(circle at 45% 15%, rgba(255, 154, 60, .4) 0 4px, transparent 5px);
-  animation: floatDeco 14s linear infinite alternate;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(255,230,240,.55) 0%, rgba(230,244,255,.55) 50%, rgba(230,255,230,.55) 100%);
 }
 
 .home-container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -749,7 +764,7 @@ canvas {
   position: relative;
 }
 
-/* 떠다니는 별 장식 */
+/* 떠다니는 장식 */
 .deco-stars {
   position: absolute;
   top: -20px;
@@ -761,8 +776,9 @@ canvas {
 
 .deco-star {
   position: absolute;
-  font-size: 18px;
+  font-size: 20px;
   animation: decoStarFloat 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
 }
 
 .deco-star-1 { top: 10%; left: 5%; animation-delay: 0s; }
@@ -775,19 +791,19 @@ canvas {
   50% { opacity: 1; transform: translateY(-8px) scale(1.1); }
 }
 
-/* 타이틀 뱃지 */
+/* 타이틀 뱃지 - 우드 프레임 느낌 */
 .title-badge {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #fff;
+  background: var(--cream);
+  border: 6px solid var(--wood-light);
   border-radius: 999px;
   padding: 10px 34px 10px 24px;
   box-shadow:
-    0 8px 0 -2px rgba(255, 126, 179, .18),
-    0 12px 32px rgba(43, 38, 68, .12),
-    inset 0 0 0 3px #fff,
-    inset 0 0 0 5px var(--brand-pink);
+    0 8px 0 -2px rgba(255, 221, 243, .18),
+    0 12px 32px rgba(0, 0, 0, .25),
+    inset 0 0 0 3px #fff8eb;
   position: relative;
   overflow: hidden;
 }
@@ -799,7 +815,7 @@ canvas {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--brand-pink), var(--brand-orange), var(--brand-yellow), var(--brand-mint), var(--brand-sky));
+  background: linear-gradient(90deg, var(--sage), var(--lemon), var(--wood-light));
 }
 
 .title-badge-emoji {
@@ -813,20 +829,30 @@ canvas {
   font-weight: 800;
   margin: 0;
   line-height: 1;
-  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-orange) 100%);
+  background: linear-gradient(135deg, var(--wood-dark) 0%, var(--wood) 50%, var(--lemon) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   letter-spacing: -1px;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.15));
 }
 
 .home-subtitle {
   font-size: 17px;
-  color: var(--brand-dark);
-  opacity: .55;
-  font-weight: 600;
+  color: #fff;
+  opacity: 1;
+  font-weight: 700;
   text-align: center;
   line-height: 1.6;
+  text-shadow:
+    0 0 12px rgba(0,0,0,1),
+    0 2px 4px rgba(0,0,0,1),
+    2px 0 4px rgba(0,0,0,1);
+  letter-spacing: .3px;
+  background: rgba(0,0,0,.3);
+  padding: 8px 16px;
+  border-radius: 12px;
+  display: inline-block;
 }
 
 /* 캐릭터 스테이지 */
@@ -839,7 +865,7 @@ canvas {
   justify-content: center;
 }
 
-/* 무지개 링 */
+/* 수달 캐릭터 링 */
 .stage-ring {
   position: absolute;
   border-radius: 50%;
@@ -848,16 +874,16 @@ canvas {
 }
 
 .ring-1 {
-  width: 340px;
-  height: 340px;
-  border-color: rgba(255, 126, 179, .2);
+  width: 360px;
+  height: 360px;
+  border-color: rgba(246, 216, 96, .45);
   animation-delay: 0s;
 }
 
 .ring-2 {
-  width: 390px;
-  height: 390px;
-  border-color: rgba(123, 255, 203, .15);
+  width: 410px;
+  height: 410px;
+  border-color: rgba(143, 185, 150, .35);
   animation-delay: 1s;
 }
 
@@ -877,7 +903,7 @@ canvas {
   width: 320px;
   height: 320px;
   object-fit: contain;
-  filter: drop-shadow(0 12px 32px rgba(255, 126, 179, .22));
+  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, .35));
 }
 
 @keyframes otterBounce {
@@ -904,7 +930,7 @@ canvas {
   50% { transform: translateX(-50%) scaleX(.8); opacity: .3; }
 }
 
-/* 무대 장식 */
+/* 무대 장식 - 레몬/세이지 */
 .stage-deco {
   position: absolute;
   z-index: 3;
@@ -915,35 +941,49 @@ canvas {
 .stage-deco-1 {
   top: 50px;
   right: 30px;
-  background: linear-gradient(135deg, var(--brand-yellow), var(--brand-orange));
+  background: linear-gradient(135deg, var(--wood-light), var(--wood));
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-delay: 0s;
+  box-shadow: 0 4px 0 var(--wood-dark), 0 6px 12px rgba(0,0,0,.25);
+}
+
+.stage-deco-2 {
+  bottom: 80px;
+  left: 20px;
+  background: linear-gradient(135deg, var(--lemon), var(--wood-light));
   width: 36px;
   height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation-delay: 0s;
-}
-
-.stage-deco-2 {
-  bottom: 80px;
-  left: 20px;
-  background: linear-gradient(135deg, var(--brand-mint), var(--brand-sky));
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   animation-delay: .8s;
+  box-shadow: 0 4px 0 #c2a830, 0 6px 12px rgba(0,0,0,.25);
 }
 
 .stage-deco-3 {
   top: 100px;
   left: 40px;
-  font-size: 20px;
+  background: linear-gradient(135deg, var(--sage), var(--sage-dark));
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation-delay: 1.4s;
+  box-shadow: 0 4px 0 var(--sage-dark), 0 6px 12px rgba(0,0,0,.25);
+  font-size: 0;
 }
+
+.stage-deco-2 { font-size: 20px; }
+.stage-deco-3 { font-size: 0; }
+.stage-deco-2::after, .stage-deco-3::after { font-size: 18px; }
 
 @keyframes decoPop {
   0%, 100% { opacity: .5; transform: scale(.7); }
@@ -961,13 +1001,13 @@ canvas {
 }
 
 .menu-panel {
-  background: rgba(255, 255, 255, .97);
+  background: rgba(254, 249, 239, .97);
   border-radius: 28px;
+  border: 6px solid var(--wood-light);
   box-shadow:
-    0 16px 0 -4px rgba(255, 126, 179, .14),
-    0 24px 50px rgba(43, 38, 68, .14),
-    inset 0 0 0 3px #fff,
-    inset 0 0 0 5px var(--brand-pink);
+    0 16px 0 -4px rgba(139, 94, 58, .25),
+    0 24px 50px rgba(0, 0, 0, .35),
+    inset 0 0 0 3px #fff8eb;
   overflow: hidden;
   position: relative;
 }
@@ -979,7 +1019,7 @@ canvas {
   left: 0;
   right: 0;
   height: 5px;
-  background: linear-gradient(90deg, var(--brand-pink), var(--brand-orange), var(--brand-yellow), var(--brand-mint), var(--brand-sky));
+  background: linear-gradient(90deg, var(--sage), var(--lemon), var(--wood-light));
 }
 
 .menu-panel-header {
@@ -990,8 +1030,8 @@ canvas {
   font-family: 'Jua', sans-serif;
   font-size: 19px;
   font-weight: 700;
-  color: var(--brand-dark);
-  border-bottom: 2.5px dashed var(--brand-sky);
+  color: var(--wood-dark);
+  border-bottom: 2.5px dashed var(--sage);
 }
 
 .menu-panel-emoji {
@@ -1028,27 +1068,27 @@ canvas {
   transform: translateX(0) scale(1);
 }
 
-/* 콧물쏙 게임 */
+/* 콧물쏙 게임 - 레몬+우드 */
 .menu-game {
-  background: linear-gradient(135deg, #fff5fa, #fff8f0);
-  border-left-color: var(--brand-orange);
+  background: linear-gradient(135deg, #fff9e0, #fff3c4);
+  border-left-color: var(--wood);
 }
 
 .menu-game:hover {
-  background: linear-gradient(135deg, #fff, #fff5eb);
+  background: linear-gradient(135deg, #fff, #fff8e0);
 }
 
-/* AI 수달 친구 */
+/* AI 수달 친구 - 세이지 */
 .menu-chat {
-  background: linear-gradient(135deg, #f4faff, #f0fff8);
-  border-left-color: var(--brand-mint);
+  background: linear-gradient(135deg, #e8f5e9, #dcedc8);
+  border-left-color: var(--sage);
 }
 
 .menu-chat:hover {
-  background: linear-gradient(135deg, #f0f8ff, #e8fff4);
+  background: linear-gradient(135deg, #f0fff0, #e8f5e9);
 }
 
-/* 메뉴 아이콘 (캐릭터 이미지) */
+/* 메뉴 아이콘 - 자연 컬러 */
 .menu-icon {
   width: 58px;
   height: 58px;
@@ -1070,11 +1110,11 @@ canvas {
 }
 
 .menu-icon-game::before {
-  background: linear-gradient(135deg, var(--brand-orange), var(--brand-pink));
+  background: linear-gradient(135deg, var(--lemon), var(--wood-light));
 }
 
 .menu-icon-chat::before {
-  background: linear-gradient(135deg, var(--brand-mint), var(--brand-sky));
+  background: linear-gradient(135deg, var(--sage), var(--sage-dark));
 }
 
 .menu-icon-img {
@@ -1091,11 +1131,11 @@ canvas {
 }
 
 .menu-game .menu-icon {
-  box-shadow: 0 4px 0 #e07a2f;
+  box-shadow: 0 4px 0 #9e8520;
 }
 
 .menu-chat .menu-icon {
-  box-shadow: 0 4px 0 #3dbd90;
+  box-shadow: 0 4px 0 var(--sage-dark);
 }
 
 .menu-item-info {
@@ -1109,19 +1149,20 @@ canvas {
   font-family: 'Jua', sans-serif;
   font-size: 19px;
   font-weight: 700;
-  color: var(--brand-dark);
+  color: var(--wood-dark);
 }
 
 .menu-item-desc {
   font-size: 13px;
-  color: #9890b5;
+  color: var(--wood);
   font-weight: 500;
+  opacity: .7;
 }
 
 .menu-item-arrow {
   font-size: 30px;
-  color: var(--brand-dark);
-  opacity: .2;
+  color: var(--wood-dark);
+  opacity: .25;
   font-weight: 700;
   transition: all .22s ease;
 }
@@ -1134,9 +1175,17 @@ canvas {
 .home-hint {
   text-align: center;
   font-size: 14px;
-  color: var(--brand-dark);
-  opacity: .45;
-  font-weight: 500;
+  color: #fff;
+  opacity: 1;
+  font-weight: 600;
+  text-shadow:
+    0 0 12px rgba(0,0,0,1),
+    0 2px 4px rgba(0,0,0,1);
+  letter-spacing: .3px;
+  background: rgba(0,0,0,.3);
+  padding: 6px 14px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 /* ===== 반응형 ===== */
