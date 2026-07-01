@@ -1,17 +1,85 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+const ROOM_THEMES = [
+  { id: 'default', name: '기본 방', emoji: '🏠', bg: '/assets/bg/otter-room.png' },
+  { id: 'ocean', name: '바닷속 방', emoji: '🌊', bg: '/assets/bg/ocean-room.png' },
+  { id: 'space', name: '우주선 방', emoji: '🚀', bg: '/assets/bg/space-room.png' },
+];
 
 export default function GameHomePage() {
   const [showModeSelect, setShowModeSelect] = useState(false);
-  const [missionProgress] = useState(12);
-  const missionTarget = 20;
+  const [perfectCount, setPerfectCount] = useState(0);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [showOtterCeremony, setShowOtterCeremony] = useState(false);
+  const [showThemePopup, setShowThemePopup] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('default');
+  const [showThemeEffect, setShowThemeEffect] = useState(false);
+  const [otterJump, setOtterJump] = useState(false);
+  const perfectTarget = 5;
+  const ceremonyShownRef = useRef(false);
+
+  // 퍼펙트 5번 달성 시 세레머니 트리거 (한 번만)
+  useEffect(() => {
+    if (perfectCount >= perfectTarget && !ceremonyShownRef.current) {
+      ceremonyShownRef.current = true;
+      setShowCelebration(true);
+      setShowOtterCeremony(true);
+    }
+  }, [perfectCount]);
+
+  // 세레머니 표시 후 4초 후 자동 닫기
+  useEffect(() => {
+    if (showCelebration) {
+      const timer = setTimeout(() => {
+        setShowCelebration(false);
+        setShowOtterCeremony(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showCelebration]);
+
+  // 테마 이펙트 자동 닫기
+  useEffect(() => {
+    if (showThemeEffect) {
+      const timer = setTimeout(() => {
+        setShowThemeEffect(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showThemeEffect]);
+
+  // 테스트용: 퍼펙트 카운트 증가 함수
+  const handlePerfectSuccess = () => {
+    if (perfectCount < perfectTarget) {
+      setPerfectCount(prev => prev + 1);
+    }
+  };
+
+  // 방 테마 변경 핸들러
+  const handleThemeChange = () => {
+    setOtterJump(true);
+    setTimeout(() => {
+      setOtterJump(false);
+      setShowThemePopup(true);
+    }, 400);
+  };
+
+  // 테마 적용 핸들러
+  const handleApplyTheme = (themeId) => {
+    setCurrentTheme(themeId);
+    setShowThemePopup(false);
+    setShowThemeEffect(true);
+  };
+
+  const currentThemeData = ROOM_THEMES.find(t => t.id === currentTheme) || ROOM_THEMES[0];
 
   return (
     <main className="home-page">
       <img
-        src="/assets/bg/otter-room.png"
+        src={currentThemeData.bg}
         alt=""
         aria-hidden="true"
         className="home-bg-img"
@@ -36,7 +104,11 @@ export default function GameHomePage() {
 
         <div className="center-stage">
           <div className="center-shadow" />
-          <div className="center-otter">
+          <div className={`center-otter ${otterJump ? 'otter-jump' : ''}`}>
+            {/* 말풍선 */}
+            <div className="otter-speech-bubble">
+              <span>오른쪽에서 모드를 골라봐! 🦦</span>
+            </div>
             <img
               src="/assets/characters/tissue-otter/frames/cropped/01-idle-smile.png"
               alt="수달 캐릭터"
@@ -45,13 +117,14 @@ export default function GameHomePage() {
         </div>
 
         <div className="center-buttons">
-          <button
-            className="btn-game-start"
-            onClick={() => setShowModeSelect(!showModeSelect)}
-          >
-            게임 시작
+          <button className="btn-bottom-pill" onClick={() => {}}>
+            <span className="btn-pill-emoji"></span>
+            <span>아이템 모음</span>
           </button>
-          <button className="btn-item-box">아이템 모음</button>
+          <button className="btn-bottom-pill" onClick={handleThemeChange}>
+            <span className="btn-pill-emoji">🖼️</span>
+            <span>방 테마 변경</span>
+          </button>
         </div>
 
         {showModeSelect && (
@@ -62,7 +135,7 @@ export default function GameHomePage() {
                 <Link href="/play" className="mode-option mode-opt-game">
                   <img src="/assets/characters/tissue-otter/frames/cropped/02-nose-tickle-anticipation.png" alt="콧물 게임" />
                   <div>
-                    <strong>콧물 게임</strong>
+                    <strong>물 게임</strong>
                     <span>타이밍 리듬 액션!</span>
                   </div>
                 </Link>
@@ -87,21 +160,46 @@ export default function GameHomePage() {
       </div>
 
       <div className="home-right-panel">
-        <div className="mission-card">
+        {/* 퍼펙트 미션 카드 */}
+        <div className="mission-card perfect-mission-card">
           <div className="mission-header">
-            <span className="mission-star">✿</span>
-            <span className="mission-title">오늘의 미션</span>
+            <span className="mission-star">✨</span>
+            <span className="mission-title">퍼펙트 "!" {perfectTarget}번 성공하기!</span>
           </div>
           <div className="mission-body">
-            <div className="mission-icon">🧻</div>
+            <div className={`mission-icon perfect-mission-icon ${perfectCount >= perfectTarget ? 'mission-complete' : ''}`}>
+              {perfectCount >= perfectTarget ? (
+                <span className="sparkle-tissue-icon">
+                  <span className="tissue-emoji">🧻</span>
+                  <span className="sparkle-star star-1">⭐</span>
+                  <span className="sparkle-star star-2">✨</span>
+                  <span className="sparkle-star star-3">💫</span>
+                </span>
+              ) : (
+                <img 
+                  src="/assets/characters/tissue-otter/frames/cropped/09-wink.png" 
+                  alt="수달이 윙크" 
+                  className="wink-otter-icon"
+                />
+              )}
+            </div>
             <div className="mission-info">
-              <span className="mission-desc">휴지 {missionTarget}칸 이동하기</span>
+              <span className="mission-desc">
+                퍼펙트 <strong>{perfectCount}</strong>/{perfectTarget} 성공!
+              </span>
               <div className="mission-bar">
                 <div
-                  className="mission-bar-fill"
-                  style={{ width: `${(missionProgress / missionTarget) * 100}%` }}
+                  className="mission-bar-fill perfect-bar-fill"
+                  style={{ width: `${(perfectCount / perfectTarget) * 100}%` }}
                 />
               </div>
+              <button 
+                className="test-perfect-btn" 
+                onClick={handlePerfectSuccess}
+                disabled={perfectCount >= perfectTarget}
+              >
+                퍼펙트 성공! (테스트)
+              </button>
             </div>
           </div>
         </div>
@@ -153,6 +251,94 @@ export default function GameHomePage() {
           </div>
         </div>
       </div>
+
+      {/* 방 테마 변경 팝업 (스티커북 슬라이드) */}
+      {showThemePopup && (
+        <div className="theme-popup-overlay" onClick={() => setShowThemePopup(false)}>
+          <div className="theme-popup-card" onClick={(e) => e.stopPropagation()}>
+            <div className="theme-popup-header">
+              <span className="theme-popup-emoji">🎨</span>
+              <h3>방 테마를 골라봐!</h3>
+              <button className="theme-popup-close" onClick={() => setShowThemePopup(false)}>✕</button>
+            </div>
+            <div className="theme-popup-list">
+              {ROOM_THEMES.map(theme => (
+                <button
+                  key={theme.id}
+                  className={`theme-option ${currentTheme === theme.id ? 'theme-option-active' : ''}`}
+                  onClick={() => handleApplyTheme(theme.id)}
+                >
+                  <span className="theme-option-emoji">{theme.emoji}</span>
+                  <span className="theme-option-name">{theme.name}</span>
+                  {currentTheme === theme.id && <span className="theme-option-check">✅</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 테마 적용 이펙트 (반짝반짝 무지개 먼지) */}
+      {showThemeEffect && (
+        <div className="theme-effect-overlay">
+          <div className="theme-effect-particles">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <span
+                key={i}
+                className="theme-particle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 0.5}s`,
+                  animationDuration: `${1 + Math.random() * 1}s`,
+                }}
+              >
+                {['✨', '⭐', '💫', '🌟', '🎨'][Math.floor(Math.random() * 5)]}
+              </span>
+            ))}
+          </div>
+          <div className="theme-effect-text">
+            <span>🎨 방이 바뀌었어! ✨</span>
+          </div>
+        </div>
+      )}
+
+      {/* 퍼펙트 미션 달성 세레머니 오버레이 */}
+      {showCelebration && (
+        <div className="celebration-overlay">
+          <div className="fireworks-container">
+            <div className="firework firework-1">🎆</div>
+            <div className="firework firework-2">🎇</div>
+            <div className="firework firework-3">✨</div>
+            <div className="firework firework-4">💫</div>
+            <div className="firework firework-5">⭐</div>
+            <div className="firework firework-6">🎉</div>
+            <div className="firework firework-7"></div>
+            <div className="firework firework-8">💥</div>
+          </div>
+
+          <div className="otter-ceremony">
+            <div className="ceremony-otter">
+              <img 
+                src="/assets/characters/tissue-otter/frames/cropped/10-combo-happy-bounce.png" 
+                alt="수달이 기뻐하며 배를 두드리는 모습" 
+                className="ceremony-otter-img"
+              />
+            </div>
+            <div className="ceremony-text">
+              <span className="ceremony-title">🎉 퍼펙트 달성! 🎉</span>
+              <span className="ceremony-subtitle">대박! 수달이가 기뻐하고 있어요!</span>
+            </div>
+            <div className="shell-fireworks">
+              <span className="shell shell-1">🐚</span>
+              <span className="shell shell-2">🦪</span>
+              <span className="shell shell-3">🐚</span>
+              <span className="shell shell-4">🦪</span>
+              <span className="shell shell-5"></span>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

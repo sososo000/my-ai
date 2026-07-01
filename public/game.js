@@ -1,5 +1,6 @@
 /** 휴지 슛! 콧물 쏙! v4 - 기록 랭킹 시스템 */
 const DW=640,DH=960,FR='assets/characters/tissue-otter/frames/normalized-320/';
+const BG_IMG='assets/bg/tissue-game-bg.png';
 const HOLES=[
   {x:130,y:430},{x:320,y:410},{x:510,y:430},
   {x:100,y:575},{x:320,y:560},{x:540,y:575},
@@ -19,14 +20,28 @@ const FNAME=['01-idle-smile','02-nose-tickle-anticipation','03-snot-starts','04-
 
 // 이미지 로더
 class Loader{
-  constructor(){this.img=[];this.done=false;this.cb=null}
-  load(cb){this.cb=cb;FNAME.forEach((n,i)=>{
-    const m=new Image();
-    m.onload=()=>{this.img[i]=m;if(i===FNAME.length-1){this.done=true;if(this.cb)this.cb()}};
-    m.onerror=()=>{this.img[i]=null;if(i===FNAME.length-1){this.done=true;if(this.cb)this.cb()}};
-    m.src=FR+n+'.png';
-  })}
+  constructor(){this.img=[];this.bg=null;this.done=false;this.cb=null}
+  load(cb){
+    this.cb=cb;
+    // 배경 이미지 로딩
+    const bg=new Image();
+    bg.onload=()=>{this.bg=bg;this._checkDone()};
+    bg.onerror=()=>{this.bg=null;this._checkDone()};
+    bg.src=BG_IMG;
+    // 캐릭터 프래임 로딩
+    FNAME.forEach((n,i)=>{
+      const m=new Image();
+      m.onload=()=>{this.img[i]=m;this._checkDone()};
+      m.onerror=()=>{this.img[i]=null;this._checkDone()};
+      m.src=FR+n+'.png';
+    });
+  }
+  _checkDone(){
+    const allLoaded=this.img.length===FNAME.length;
+    if(allLoaded){this.done=true;if(this.cb)this.cb()}
+  }
   get(i){return this.img[i]||null}
+  getBg(){return this.bg}
 }
 
 // 파티클
@@ -254,52 +269,19 @@ class Game{
 
   draw(){
     const c=this.c;
-    // 1. 하늘 배경 그라데이션
-    const sky=c.createLinearGradient(0,0,0,DH*0.45);
-    sky.addColorStop(0,'#B8DAF4');
-    sky.addColorStop(0.7,'#D6EDF8');
-    sky.addColorStop(1,'#E8F4E6');
-    c.fillStyle=sky;
-    c.fillRect(0,0,DW,DH);
-
-    // 2. 구름 (흰색~연녹 그라데이션)
-    for(let i=0;i<6;i++){
-      const bx=(i*130+this.time*12)%960-50;
-      const by=50+((i*47)%120);
-      const cloudGrad=c.createRadialGradient(bx,by,10,bx+20,by+10,70);
-      cloudGrad.addColorStop(0,'rgba(255,255,255,.95)');
-      cloudGrad.addColorStop(0.7,'rgba(240,252,240,.7)');
-      cloudGrad.addColorStop(1,'rgba(200,230,220,.3)');
-      c.fillStyle=cloudGrad;
-      c.beginPath();
-      c.arc(bx,by,38,0,Math.PI*2);c.arc(bx+30,by-8,32,0,Math.PI*2);
-      c.arc(bx+60,by+4,35,0,Math.PI*2);c.arc(bx+25,by+14,28,0,Math.PI*2);
-      c.fill();
+    // 1. 배경 이미지 그리기
+    const bg=this.ld.getBg();
+    if(bg&&bg.complete&&bg.naturalWidth){
+      c.drawImage(bg,0,0,DW,DH);
+    }else{
+      // fallback: 기존 그라데이션 배경
+      const sky=c.createLinearGradient(0,0,0,DH*0.45);
+      sky.addColorStop(0,'#B8DAF4');
+      sky.addColorStop(0.7,'#D6EDF8');
+      sky.addColorStop(1,'#E8F4E6');
+      c.fillStyle=sky;
+      c.fillRect(0,0,DW,DH);
     }
-
-    // 3. 배경 언덕 (3단)
-    // 먼 언덕
-    c.fillStyle='#A3D9A5';
-    c.beginPath();c.moveTo(0,DH*0.42);
-    c.bezierCurveTo(DW*0.3,DH*0.34,DW*0.7,DH*0.42,DW,DH*0.38);
-    c.lineTo(DW,DH*0.5);c.lineTo(0,DH*0.5);c.closePath();c.fill();
-    // 중간 언덕
-    c.fillStyle='#8FCA91';
-    c.beginPath();c.moveTo(0,DH*0.48);
-    c.bezierCurveTo(DW*0.25,DH*0.40,DW*0.6,DH*0.50,DW,DH*0.44);
-    c.lineTo(DW,DH*0.55);c.lineTo(0,DH*0.55);c.closePath();c.fill();
-    // 가까운 언덕 (게임 필드)
-    c.fillStyle='#78B879';
-    c.beginPath();c.moveTo(0,DH*0.52);
-    c.bezierCurveTo(DW*0.2,DH*0.46,DW*0.75,DH*0.54,DW,DH*0.48);
-    c.lineTo(DW,DH);c.lineTo(0,DH);c.closePath();c.fill();
-
-    // 4. 풀밭 필드 바닥 (밝은 초록)
-    const field=c.createLinearGradient(0,DH*0.56,0,DH);
-    field.addColorStop(0,'#70B673');
-    field.addColorStop(0.5,'#6BAA6E');
-    field.addColorStop(1,'#5D9E60');
-    c.fillStyle=field;c.fillRect(0,DH*0.56,DW,DH*0.44);
 
     // 5. 구멍 그리기 (입체적)
     for(const h of this.holes){
@@ -386,15 +368,6 @@ class Game{
     this.particles.forEach(p=>p.draw(c));
     this.floats.forEach(t=>t.draw(c));
 
-    // 10. 하단 잔디 장식
-    const grassY=DH*0.92;
-    c.strokeStyle='#4A8C4C';c.lineWidth=2;
-    for(let i=0;i<DW;i+=12){
-      const h=8+Math.sin(i*0.3+this.time*2)*4;
-      c.beginPath();c.moveTo(i,grassY);c.lineTo(i+2,grassY-h);c.stroke();
-    }
-    c.fillStyle='#5D9E60';
-    c.fillRect(0,grassY,DW,DH-grassY);
 
     // 11. HUD (가장 위에 - 커서에 가려지지 않도록)
     if(this.state==='PLAYING'){
@@ -602,7 +575,7 @@ function initGame(canvasEl){
       list.innerHTML='<div style="color:#BFB8D6;text-align:center;padding:20px">아직 기록이 없어요!</div>';
       $('adContinueRow').style.display='none';
     }else{
-      const medals=['🥇','',''];
+      const medals=['🥇','🥈','🥉'];
       records.forEach((r,i)=>{
         const d=document.createElement('div');
         d.className='board-row rank-'+(i+1);

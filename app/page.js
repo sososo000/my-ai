@@ -112,7 +112,7 @@ export default function LandingPage() {
             />
             <img
               className="landing-otter-main"
-              src="/assets/characters/tissue-otter/animation/tissue-otter-gameplay-loop.gif"
+              src="/assets/characters/tissue-otter/frames/cropped/06-perfect-hit-surprise.png"
               alt="휴지 슛 게임을 하는 티슈 수달"
             />
             <div className="landing-score-badge">콤보 팡!</div>

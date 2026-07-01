@@ -486,11 +486,8 @@
         function tryPoop(playerIdx) {
             const p = players[playerIdx];
             if (p.belly <= 0 || p.isPooping || p.poopCooldown > 0) return;
-            p.isPooping = true;
-            p.poopTimer = 30;
-            p.poopCooldown = 20;
-            p.totalPoops++;
 
+            // 변기가 있는지 먼저 확인
             let onToilet = false;
             for (let toilet of toilets) {
                 let dx = p.x - toilet.x;
@@ -498,18 +495,24 @@
                 if (Math.sqrt(dx * dx + dy * dy) < 55) { onToilet = true; break; }
             }
 
-            let points = 10;
-            if (onToilet) {
-                p.combo++;
-                if (p.combo > p.maxCombo) p.maxCombo = p.combo;
-                p.toiletPoops++;
-                points = 30 * p.combo;
-                addFloatingText(p.x, p.y - 40, `+${points} 🎯`, p.color);
-                for (let i = 0; i < 6; i++) particles.push({ x: p.x, y: p.y, vx: (Math.random() - 0.5) * 6, vy: -Math.random() * 5 - 2, life: 40, emoji: '✨' });
-            } else {
-                p.combo = 0;
-                addFloatingText(p.x, p.y - 40, `+${points}`, p.color);
+            // 변기가 없으면 똥싸기 불가! (바닥에 싸는 것 금지)
+            if (!onToilet) {
+                addFloatingText(p.x, p.y - 40, '🚫 변기!', '#ff4444');
+                return;
             }
+
+            // 변기가 있을 때만 싸기 성공
+            p.isPooping = true;
+            p.poopTimer = 30;
+            p.poopCooldown = 20;
+            p.totalPoops++;
+            p.toiletPoops++;
+            p.combo++;
+            if (p.combo > p.maxCombo) p.maxCombo = p.combo;
+
+            let points = 30 * p.combo;
+            addFloatingText(p.x, p.y - 40, `+${points} 🎯`, p.color);
+            for (let i = 0; i < 6; i++) particles.push({ x: p.x, y: p.y, vx: (Math.random() - 0.5) * 6, vy: -Math.random() * 5 - 2, life: 40, emoji: '✨' });
 
             p.score += points;
             p.belly = Math.max(0, p.belly - 30);
